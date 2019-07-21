@@ -1,4 +1,4 @@
-package com.tradeservice.TestProject.Entities;
+package com.tradeservice.TestProject.entities;
 
 import java.util.Date;
 import java.util.Set;
@@ -12,7 +12,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "Order1")
-public class Order1 {
+public class Order {
 
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
@@ -27,13 +27,13 @@ public class Order1 {
   @Column(name = "Address", nullable = false)
   private String address;
 
-  @OneToMany(mappedBy = "order1")
+  @OneToMany(mappedBy = "order")
   private Set<OrderLine> orderLineSet;
 
-  public Order1() {
+  public Order() {
   }
 
-  public Order1(String client, Date date, String address) {
+  public Order(String client, Date date, String address) {
     this.client = client;
     this.date = date;
     this.address = address;
@@ -73,7 +73,7 @@ public class Order1 {
 
   @Override
   public String toString() {
-    return "Order1{" +
+    return "Order{" +
         "orderId=" + orderId +
         ", client='" + client + '\'' +
         ", date=" + date +

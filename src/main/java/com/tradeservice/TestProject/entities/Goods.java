@@ -1,4 +1,4 @@
-package com.tradeservice.TestProject.Entities;
+package com.tradeservice.TestProject.entities;
 
 import java.util.Set;
 import javax.persistence.Column;
@@ -24,6 +24,7 @@ public class Goods {
   private Double price;
 
   @OneToMany(mappedBy = "goods")
+  private
   Set<OrderLine> orderLineSet;
 
   public Goods() {
@@ -56,6 +57,14 @@ public class Goods {
 
   public void setPrice(Double price) {
     this.price = price;
+  }
+
+  public Set<OrderLine> getOrderLineSet() {
+    return orderLineSet;
+  }
+
+  public void setOrderLineSet(Set<OrderLine> orderLineSet) {
+    this.orderLineSet = orderLineSet;
   }
 
   @Override
