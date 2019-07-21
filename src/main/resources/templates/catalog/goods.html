@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <title>Catalog &#8211; Java + Spring E-Shop Tutorial</title>
+</head>
+<body>
+<h1>Catalog</h1>
+<ul>
+  <li data-th-each="goods : ${goods}" class="goods">
+    <a data-th-href="@{/catalog/goods/{goodsId}(goodsId=${goods.getId})}"
+       data-th-text="${goods.toString}"></a>
+  </li>
+
+</ul>
+</body>
+</html>
