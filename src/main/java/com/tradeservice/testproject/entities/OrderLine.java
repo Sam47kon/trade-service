@@ -1,4 +1,4 @@
-package com.tradeservice.TestProject.entities;
+package com.tradeservice.testproject.entities;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -19,7 +19,7 @@ public class OrderLine {
 
   @ManyToOne()
   @JoinColumn(name = "orderId")
-  private Order order;
+  private Order order_items;
 
   @ManyToOne()
   @JoinColumn(name = "goodsId")
@@ -31,8 +31,8 @@ public class OrderLine {
   public OrderLine() {
   }
 
-  public OrderLine(Order order, Goods goods, int count) {
-    this.order = order;
+  public OrderLine(Order order_items, Goods goods, int count) {
+    this.order_items = order_items;
     this.goods = goods;
     this.count = count;
   }
@@ -45,12 +45,12 @@ public class OrderLine {
     this.id = id;
   }
 
-  public Order getOrder() {
-    return order;
+  public Order getOrder_items() {
+    return order_items;
   }
 
-  public void setOrder(Order order) {
-    this.order = order;
+  public void setOrder_items(Order order_items) {
+    this.order_items = order_items;
   }
 
   public Goods getGoods() {
@@ -73,7 +73,7 @@ public class OrderLine {
   public String toString() {
     return "OrderLine{" +
         "id=" + id +
-        ", order=" + order +
+        ", order_items=" + order_items +
         ", goods=" + goods +
         ", count=" + count +
         '}';

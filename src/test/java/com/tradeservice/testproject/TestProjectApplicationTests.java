@@ -1,4 +1,4 @@
-package com.tradeservice.TestProject;
+package com.tradeservice.testproject;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

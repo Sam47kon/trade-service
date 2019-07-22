@@ -1,18 +1,24 @@
-package com.tradeservice.TestProject.Service.impl;
+package com.tradeservice.testproject.services.impl;
 
-import com.tradeservice.TestProject.Service.GoodsService;
-import com.tradeservice.TestProject.entities.Goods;
-import com.tradeservice.TestProject.repository.GoodsRepository;
+import com.tradeservice.testproject.services.GoodsService;
+import com.tradeservice.testproject.entities.Goods;
+import com.tradeservice.testproject.repositories.GoodsRepository;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+@Service
 public class GoodsServiceImpl implements GoodsService {
 
-  @Autowired
   private GoodsRepository goodsRepository;
 
+  @Autowired
+  public GoodsServiceImpl(GoodsRepository goodsRepository) {
+    this.goodsRepository = goodsRepository;
+  }
+
   @Override
-  public Goods addGoods(Goods goods) {
+  public Goods add(Goods goods) {
     return goodsRepository.save(goods);
   }
 
@@ -27,7 +33,7 @@ public class GoodsServiceImpl implements GoodsService {
   }
 
   @Override
-  public Goods editGoods(Goods goods) {
+  public Goods edit(Goods goods) {
     return goodsRepository.saveAndFlush(goods);
   }
 

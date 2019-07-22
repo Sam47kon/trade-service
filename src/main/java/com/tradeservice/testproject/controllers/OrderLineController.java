@@ -1,10 +1,10 @@
-package com.tradeservice.TestProject.controllers;
+package com.tradeservice.testproject.controllers;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("order")
-public class OrderController {
+@RequestMapping("order-line")
+public class OrderLineController {
 
 }

@@ -1,4 +1,4 @@
-package com.tradeservice.TestProject.entities;
+package com.tradeservice.testproject.entities;
 
 import java.util.Date;
 import java.util.Set;
@@ -27,7 +27,7 @@ public class Order {
   @Column(name = "Address", nullable = false)
   private String address;
 
-  @OneToMany(mappedBy = "order")
+  @OneToMany(mappedBy = "order_items")
   private Set<OrderLine> orderLineSet;
 
   public Order() {

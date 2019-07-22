@@ -1,4 +1,4 @@
-package com.tradeservice.TestProject;
+package com.tradeservice.testproject;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

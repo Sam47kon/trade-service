@@ -1,4 +1,4 @@
-package com.tradeservice.TestProject;
+package com.tradeservice.testproject;
 
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;

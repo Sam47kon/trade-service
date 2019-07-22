@@ -1,4 +1,4 @@
-package com.tradeservice.TestProject.entities;
+package com.tradeservice.testproject.entities;
 
 import java.util.Set;
 import javax.persistence.Column;
@@ -15,16 +15,16 @@ public class Goods {
 
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
-  private Long goodsId;
+  public Long goodsId;
 
   @Column(name = "Name", nullable = false)
-  private String name;
+  public String name;
 
   @Column(name = "Price")
-  private Double price;
+  public Double price;
 
   @OneToMany(mappedBy = "goods")
-  private
+  public
   Set<OrderLine> orderLineSet;
 
   public Goods() {

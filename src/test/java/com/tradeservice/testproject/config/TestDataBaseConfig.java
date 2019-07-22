@@ -1,4 +1,4 @@
-package com.tradeservice.TestProject.config;
+package com.tradeservice.testproject.config;
 
 import java.util.Properties;
 import javax.sql.DataSource;
