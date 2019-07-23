@@ -6,7 +6,7 @@ public interface CrudService<T> {
 
   T add(T obj);
 
-//  T getById(Long id);
+  T getById(Long id);
 
   T edit(T obj);
 

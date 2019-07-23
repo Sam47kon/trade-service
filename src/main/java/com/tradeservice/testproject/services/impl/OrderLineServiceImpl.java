@@ -1,9 +1,10 @@
 package com.tradeservice.testproject.services.impl;
 
-import com.tradeservice.testproject.services.OrderLineService;
 import com.tradeservice.testproject.entities.OrderLine;
 import com.tradeservice.testproject.repositories.OrderLineRepository;
+import com.tradeservice.testproject.services.OrderLineService;
 import java.util.List;
+import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,6 +21,12 @@ public class OrderLineServiceImpl implements OrderLineService {
   @Override
   public OrderLine add(OrderLine orderLine) {
     return orderLineRepository.save(orderLine);
+  }
+
+  @Override
+  public OrderLine getById(Long id) {
+    Optional<OrderLine> optionalOrderLine = orderLineRepository.findById(id);
+    return optionalOrderLine.orElse(null);
   }
 
   @Override

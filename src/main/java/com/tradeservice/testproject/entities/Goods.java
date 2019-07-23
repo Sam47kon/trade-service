@@ -15,17 +15,16 @@ public class Goods {
 
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
-  public Long goodsId;
+  private Long goodsId;
 
   @Column(name = "Name", nullable = false)
-  public String name;
+  private String name;
 
-  @Column(name = "Price")
-  public Double price;
+  @Column(name = "Price", nullable = false)
+  private Double price;
 
   @OneToMany(mappedBy = "goods")
-  public
-  Set<OrderLine> orderLineSet;
+  private Set<OrderLine> orderLineSet;  // геттеры и сеттеры не ставить
 
   public Goods() {
   }
@@ -57,14 +56,6 @@ public class Goods {
 
   public void setPrice(Double price) {
     this.price = price;
-  }
-
-  public Set<OrderLine> getOrderLineSet() {
-    return orderLineSet;
-  }
-
-  public void setOrderLineSet(Set<OrderLine> orderLineSet) {
-    this.orderLineSet = orderLineSet;
   }
 
   @Override

@@ -1,9 +1,10 @@
 package com.tradeservice.testproject.services.impl;
 
-import com.tradeservice.testproject.services.GoodsService;
 import com.tradeservice.testproject.entities.Goods;
 import com.tradeservice.testproject.repositories.GoodsRepository;
+import com.tradeservice.testproject.services.GoodsService;
 import java.util.List;
+import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,6 +21,12 @@ public class GoodsServiceImpl implements GoodsService {
   @Override
   public Goods add(Goods goods) {
     return goodsRepository.save(goods);
+  }
+
+  @Override
+  public Goods getById(Long id) {
+    Optional<Goods> optionalGoods = goodsRepository.findById(id);
+    return optionalGoods.orElse(null);
   }
 
   @Override

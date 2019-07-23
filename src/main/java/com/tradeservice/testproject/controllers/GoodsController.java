@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -23,38 +25,44 @@ public class GoodsController {
     this.goodsService = goodsService;
   }
 
-  @GetMapping("/")
-  public List<Goods> getGoods() {
+  @GetMapping(value = "")
+  public List<Goods> getAllGoods() {
     return goodsService.getAll();
   }
 
-  @PostMapping("/editgoods")
-  public Goods editGoods(Goods goods) {// TODO
-    return goodsService.edit(goods);
+
+  @GetMapping("/test1")
+  public String getAllGoodsTest1() {
+    List<Goods> list = goodsService.getAll();
+    return String.valueOf(list.size());
+  }
+
+  @PostMapping(value = "/test2", consumes = MediaType.APPLICATION_JSON_VALUE)
+  @ResponseBody
+  public String test2(@RequestParam String name,@RequestParam(value = "price") Double price) {
+    return name + price;
   }
 
 
-  @PostMapping(value = "/addgoods", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
-  public Goods getGoods(Goods goods) {
-    return goodsService.add(goods);
+  @PostMapping(value = "/editgoods")    // TODO
+  @ResponseBody
+  public Goods editGoods(@RequestParam(value = "id") Long id,
+      @RequestParam(value = "name") String name,
+      @RequestParam(value = "price") Double price) {
+
+    Goods goods = goodsService.getById(id);
+    return goodsService.edit(goods);
+  }
+
+  @PostMapping(value = "/addgoods")
+  @ResponseBody
+  public Goods addGoods(@RequestParam String name, @RequestParam Double price) {
+    return goodsService.add(new Goods(name, price));
   }
 
 
   @GetMapping("/test")
   public String getString() {
-    return "Получилось! \n" + "package com.tradeservice.testproject.controllers;\n"
-        + "\n"
-        + "import org.springframework.web.bind.annotation.RequestMapping;\n"
-        + "import org.springframework.web.bind.annotation.RestController;\n"
-        + "\n"
-        + "@RestController\n"
-        + "@RequestMapping(\"catalog\")\n"
-        + "public class GoodsController {\n"
-        + "\n"
-        + "  @RequestMapping(\"get\")\n"
-        + "  public String getString(){\n"
-        + "    return \"\";\n"
-        + "  }\n"
-        + "}";
+    return "Получилось!";
   }
 }
