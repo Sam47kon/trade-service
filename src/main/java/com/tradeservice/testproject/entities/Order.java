@@ -27,7 +27,7 @@ public class Order {
   @Column(name = "Address", nullable = false)
   private String address;
 
-  @OneToMany(mappedBy = "order_items")
+  @OneToMany(mappedBy = "order_item")
   private Set<OrderLine> orderLineSet;
 
   public Order() {

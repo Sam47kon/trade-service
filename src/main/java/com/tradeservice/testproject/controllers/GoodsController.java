@@ -4,18 +4,16 @@ import com.tradeservice.testproject.entities.Goods;
 import com.tradeservice.testproject.services.impl.GoodsServiceImpl;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping(value = "/catalog", method = RequestMethod.GET,
-    produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(value = "/catalog", method = RequestMethod.GET)
 public class GoodsController {
 
   private GoodsServiceImpl goodsService;
@@ -31,38 +29,15 @@ public class GoodsController {
   }
 
 
-  @GetMapping("/test1")
-  public String getAllGoodsTest1() {
-    List<Goods> list = goodsService.getAll();
-    return String.valueOf(list.size());
-  }
-
-  @PostMapping(value = "/test2", consumes = MediaType.APPLICATION_JSON_VALUE)
+  @PostMapping("/editgoods")
   @ResponseBody
-  public String test2(@RequestParam String name,@RequestParam(value = "price") Double price) {
-    return name + price;
-  }
-
-
-  @PostMapping(value = "/editgoods")    // TODO
-  @ResponseBody
-  public Goods editGoods(@RequestParam(value = "id") Long id,
-      @RequestParam(value = "name") String name,
-      @RequestParam(value = "price") Double price) {
-
-    Goods goods = goodsService.getById(id);
+  public Goods editGoods(@RequestBody Goods goods) {
     return goodsService.edit(goods);
   }
 
-  @PostMapping(value = "/addgoods")
+  @PostMapping("/addgoods")
   @ResponseBody
-  public Goods addGoods(@RequestParam String name, @RequestParam Double price) {
-    return goodsService.add(new Goods(name, price));
-  }
-
-
-  @GetMapping("/test")
-  public String getString() {
-    return "Получилось!";
+  public Goods addGoods(@RequestBody Goods goods) {
+    return goodsService.add(goods);
   }
 }

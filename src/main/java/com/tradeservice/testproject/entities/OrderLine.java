@@ -19,7 +19,7 @@ public class OrderLine {
 
   @ManyToOne()
   @JoinColumn(name = "orderId")
-  private Order order_items;
+  private Order order_item;
 
   @ManyToOne()
   @JoinColumn(name = "goodsId")
@@ -31,8 +31,8 @@ public class OrderLine {
   public OrderLine() {
   }
 
-  public OrderLine(Order order_items, Goods goods, int count) {
-    this.order_items = order_items;
+  public OrderLine(Order order_item, Goods goods, int count) {
+    this.order_item = order_item;
     this.goods = goods;
     this.count = count;
   }
@@ -45,12 +45,12 @@ public class OrderLine {
     this.id = id;
   }
 
-  public Order getOrder_items() {
-    return order_items;
+  public Order getOrder_item() {
+    return order_item;
   }
 
-  public void setOrder_items(Order order_items) {
-    this.order_items = order_items;
+  public void setOrder_item(Order order_item) {
+    this.order_item = order_item;
   }
 
   public Goods getGoods() {
@@ -73,7 +73,7 @@ public class OrderLine {
   public String toString() {
     return "OrderLine{" +
         "id=" + id +
-        ", order_items=" + order_items +
+        ", order_item=" + order_item +
         ", goods=" + goods +
         ", count=" + count +
         '}';
