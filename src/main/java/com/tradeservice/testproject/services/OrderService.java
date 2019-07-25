@@ -8,7 +8,7 @@ public interface OrderService {
 
   Order addOrder(Order obj);
 
-  Order geOrderById(Long id);
+  Order getOrderById(Long id);
 
   Order ediOrder(Order obj);
 
@@ -16,7 +16,7 @@ public interface OrderService {
 
   List<Order> getAllOrders();
 
-  Order getByClient(String client);
+  Order getOrderByClient(String client);
 
 
   OrderLine addOrderLine(OrderLine orderLine);
@@ -27,7 +27,7 @@ public interface OrderService {
 
   void deleteOrderLine(Long id);
 
-  List<OrderLine> getAllOrderLine();
+  OrderLine getOrderLineByOrder(Order order_item);
 
-  OrderLine getByCount(Long name);
+  List<OrderLine> getAllOrderLine();
 }

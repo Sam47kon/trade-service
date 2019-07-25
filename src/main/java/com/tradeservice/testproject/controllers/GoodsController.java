@@ -23,21 +23,35 @@ public class GoodsController {
     this.goodsService = goodsService;
   }
 
+  /**
+   * 6) - добавление нового товара  // РАБОТАЕТ!!!
+   *
+   * @param goods добавляемый товар {name:?, price:?}
+   * @return сам товар, если успешно
+   */
+  @PostMapping("/addgoods")
+  @ResponseBody
+  public Goods addGoods(@RequestBody Goods goods) {
+    return goodsService.add(goods);
+  }
+
+  /**
+   * 9) - получение всех товаров  // РАБОТАЕТ!!!
+   * @return все товары
+   */
   @GetMapping(value = "")
   public List<Goods> getAllGoods() {
     return goodsService.getAll();
   }
 
-
-  @PostMapping("/editgoods")
+  /**
+   * 7) - изменение существующего товара
+   * @param goods товар {name:?, price:?} FIXME
+   * @return сам товар
+   */
+  @PostMapping("/editgood")
   @ResponseBody
   public Goods editGoods(@RequestBody Goods goods) {
     return goodsService.edit(goods);
-  }
-
-  @PostMapping("/addgoods")
-  @ResponseBody
-  public Goods addGoods(@RequestBody Goods goods) {
-    return goodsService.add(goods);
   }
 }

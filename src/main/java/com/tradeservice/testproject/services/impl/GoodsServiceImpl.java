@@ -41,7 +41,9 @@ public class GoodsServiceImpl implements GoodsService {
 
   @Override
   public Goods edit(Goods goods) {
-    return goodsRepository.saveAndFlush(goods);
+    return goodsRepository.saveAndFlush(goods); //FIXME изменяет, только если указать id
+//     Хочу чтобы изменить можно было по имени. нужно сначала найти товар по имени, и тогда его
+//     изменить. 26.07 подумать, добавить новый метод или изменить этот
   }
 
   @Override

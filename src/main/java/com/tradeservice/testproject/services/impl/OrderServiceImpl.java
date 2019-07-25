@@ -12,6 +12,7 @@ import com.tradeservice.testproject.utils.OrderParams;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -41,7 +42,7 @@ public class OrderServiceImpl implements OrderService {
   }
 
   @Override
-  public Order geOrderById(Long id) {
+  public Order getOrderById(Long id) {
     Optional<Order> optionalOrder = orderRepository.findById(id);
     return optionalOrder.orElse(null);
   }
@@ -57,8 +58,8 @@ public class OrderServiceImpl implements OrderService {
   }
 
   @Override
-  public Order getByClient(String client) {
-    return orderRepository.findByClient(client);
+  public Order getOrderByClient(String client) {
+    return orderRepository.findFirstByClient(client);
   }
 
   @Override
@@ -73,8 +74,9 @@ public class OrderServiceImpl implements OrderService {
   }
 
   @Override
-  public OrderLine getByCount(Long count) {
-    return orderLineRepository.findByCount(count);
+  public OrderLine getOrderLineById(Long id) {
+    Optional<OrderLine> optionalOrderLine = orderLineRepository.findById(id);
+    return optionalOrderLine.orElse(null);
   }
 
   @Override
@@ -88,9 +90,8 @@ public class OrderServiceImpl implements OrderService {
   }
 
   @Override
-  public OrderLine getOrderLineById(Long id) {
-    Optional<OrderLine> optionalOrderLine = orderLineRepository.findById(id);
-    return optionalOrderLine.orElse(null);
+  public OrderLine getOrderLineByOrder(Order orderItem) {
+    return orderLineRepository.findByOrderItem(orderItem);
   }
 
   @Override
@@ -124,5 +125,23 @@ public class OrderServiceImpl implements OrderService {
     }
     sb.append(client).append(date).append(address).append(goodsName);
     return sb.toString();
+  }
+
+
+  public OrderLine getOrderLineByOrderId(Long orderId) {
+    return orderLineRepository.findByOrderItem(getOrderById(orderId));
+  }
+
+  public Map<Order, OrderLine> getAllFullOrders() {
+    Map<Order, OrderLine> resultMap = new LinkedHashMap<>();
+    List<Order> orderList = getAllOrders();
+
+    for (Order order : orderList) {
+      OrderLine orderLine = getOrderLineByOrder(order);
+      if (orderLine != null) {
+        resultMap.put(order, orderLine);
+      }
+    }
+    return resultMap;
   }
 }
