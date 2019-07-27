@@ -14,10 +14,10 @@ import javax.persistence.Table;
 public class Goods {
 
   @Id
-  @GeneratedValue(strategy = GenerationType.AUTO)
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long goodsId;
 
-  @Column(name = "Name", nullable = false)
+  @Column(name = "Name", nullable = false, unique = true)
   private String name;
 
   @Column(name = "Price", nullable = false)
@@ -30,6 +30,12 @@ public class Goods {
   }
 
   public Goods(String name, Double price) {
+    this.name = name;
+    this.price = price;
+  }
+
+  public Goods(Long goodsId, String name, Double price) {
+    this.goodsId = goodsId;
     this.name = name;
     this.price = price;
   }

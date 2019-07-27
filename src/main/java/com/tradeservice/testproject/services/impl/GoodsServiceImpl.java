@@ -4,6 +4,7 @@ import com.tradeservice.testproject.entities.Goods;
 import com.tradeservice.testproject.repositories.GoodsRepository;
 import com.tradeservice.testproject.services.GoodsService;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -41,13 +42,37 @@ public class GoodsServiceImpl implements GoodsService {
 
   @Override
   public Goods edit(Goods goods) {
-    return goodsRepository.saveAndFlush(goods); //FIXME изменяет, только если указать id
-//     Хочу чтобы изменить можно было по имени. нужно сначала найти товар по имени, и тогда его
-//     изменить. 26.07 подумать, добавить новый метод или изменить этот
+    return goodsRepository.saveAndFlush(goods);
   }
 
   @Override
   public List<Goods> getAll() {
     return goodsRepository.findAll();
   }
+
+
+  // Чтобы изменить можно было по имени. нужно сначала найти товар в БД по имени, затем изменить
+  public Goods editWithoutId(Map<String, String> map) {
+    String oldName = map.get("oldName");
+    if (oldName == null) {
+      return null;
+    }
+    String newName = map.get("newName");
+    String strNewPrice = map.get("newPrice");
+
+
+    Goods result = goodsRepository.findByName(oldName);
+    if (result != null) {
+      if (newName != null) {
+        result.setName(newName);
+      }
+      if (strNewPrice != null) {
+        Double newPrice = Double.parseDouble(strNewPrice);
+        result.setPrice(newPrice);
+      }
+      return goodsRepository.saveAndFlush(result);
+    }
+    return null;
+  }
+
 }

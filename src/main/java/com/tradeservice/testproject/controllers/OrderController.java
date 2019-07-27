@@ -3,6 +3,7 @@ package com.tradeservice.testproject.controllers;
 import com.tradeservice.testproject.entities.Order;
 import com.tradeservice.testproject.entities.OrderLine;
 import com.tradeservice.testproject.services.impl.OrderServiceImpl;
+import java.util.List;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,18 +26,39 @@ public class OrderController {
 
 
   /**
-   * 1) - добавление нового заказа // РАБОТАЕТ!!!
-   * @param map - client, date, address, count, goodsname LOOK THIS!!!
-   * @return text if ok
+   * 1) - добавление нового заказа // ГОТОВО
+   * @param map - {client:?, date:?, address:?, count:?, goodsName:?}. count - default = 1
+   * @return map, где все данные по заказу.
    */
   @PostMapping("/neworder")
   @ResponseBody
-  public String addFullOrder(@RequestBody Map<String, String> map) {
+  public OrderLine addFullOrder(@RequestBody Map<String, String> map) {
     return orderService.addFullOrder(map);
   }
 
+  /**
+   * 2)	- изменение существующего заказа // TODO остановился здесь
+   *
+   * @param map - {client:?, date:?, address:?, count:?, goodsName:?}.
+   * @return map, где все данные по заказу.
+   */
+  @PostMapping("/editorder")
+  @ResponseBody
+  public OrderLine editFullOrder(@RequestBody Map<String, String> map) {
+    return orderService.editFullOrder(map);
+  }
 
-  // получение Order по его id // РАББОТАЕТ!!!
+
+  /**
+   * 4)	- получение всех заказов  // ГОТОВО
+   */
+  @GetMapping("/allorders")
+  public List<OrderLine> getAllFullOrders() {
+    return orderService.getAllOrderLine();
+  }
+
+
+  // получение Order по его id // ГОТОВО
   @GetMapping("/getpreorder")
   @ResponseBody
   public Order getOrder(@RequestBody Map<String, String> map) {
@@ -55,7 +77,7 @@ public class OrderController {
     return resultOrder;
   }
 
-  // получение OrderLine по orderId либо по id самого OrderLine // РАБОТАЕТ!!!
+  // получение OrderLine по orderId либо по id самого OrderLine // ГОТОВО
   @GetMapping("/getorderline")
   @ResponseBody
   public OrderLine getOrderLine(@RequestBody Map<String, String> map) {
@@ -71,13 +93,5 @@ public class OrderController {
       }
     }
     return resultOrderLine;
-  }
-
-  /**
-   * 4)	- получение всех заказов  // РАБОТАЕТ!!!
-   */
-  @GetMapping("/allorders")
-  public Map<Order, OrderLine> getAllFullOrders() {
-    return orderService.getAllFullOrders();
   }
 }

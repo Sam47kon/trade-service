@@ -8,11 +8,9 @@ import com.tradeservice.testproject.repositories.OrderLineRepository;
 import com.tradeservice.testproject.repositories.OrderRepository;
 import com.tradeservice.testproject.services.OrderService;
 import com.tradeservice.testproject.utils.MyUtil;
-import com.tradeservice.testproject.utils.OrderParams;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -100,48 +98,67 @@ public class OrderServiceImpl implements OrderService {
   }
 
 
-  public String addFullOrder(Map<String, String> map) {
-    StringBuilder sb = new StringBuilder();
-
-    String client = map.get(OrderParams.client.toString());
+  public OrderLine addFullOrder(Map<String, String> map) {
+    String client = map.get("client");
     Date date = null;
     try {
-      date = new SimpleDateFormat(MyUtil.PATTERN_DATE_FORMAT)
-          .parse(map.get(OrderParams.date.toString()));
+      date = new SimpleDateFormat(MyUtil.PATTERN_DATE_FORMAT).parse(map.get("date"));
     } catch (ParseException e) {
       e.printStackTrace();
     }
-    String address = map.get(OrderParams.address.toString());
-    String goodsName = map.get(OrderParams.goodsname.toString());
-    int count = Integer.parseInt(map.get(OrderParams.count.toString()));
 
-    Order order = new Order(client, date, address);
+    String address = map.get("address");
+    String goodsName = map.get("goodsName");
+
+    int count = 1;
+    String strCount = map.get("count");
+    if (strCount != null) {
+      count = Integer.parseInt(strCount);
+    }
+
     Goods goods = goodsRepository.findByName(goodsName);
-    OrderLine orderLine = new OrderLine(order, goods, count);
 
-    if (!(client == null) && !(date == null) && !(address == null) && !(goods == null)) {
+    if (!(client == null) && !(address == null) && !(date == null) && !(goods == null)) {
+      Order order = new Order(client, date, address);
+      OrderLine orderLine = new OrderLine(order, goods, count);
       addOrder(order);
       addOrderLine(orderLine);
+      return orderLine;
     }
-    sb.append(client).append(date).append(address).append(goodsName);
-    return sb.toString();
+    return null;
   }
 
+  public OrderLine editFullOrder(Map<String, String> map) { // TODO здесь
+//    String client = map.get("client");
+//    Date date = null;
+//    try {
+//      date = new SimpleDateFormat(MyUtil.PATTERN_DATE_FORMAT).parse(map.get("date"));
+//    } catch (ParseException e) {
+//      e.printStackTrace();
+//    }
+//
+//    String address = map.get("address");
+//    String goodsName = map.get("goodsName");
+//
+//    int count = 1;
+//    String strCount = map.get("count");
+//    if (strCount != null) {
+//      count = Integer.parseInt(strCount);
+//    }
+//
+//    Goods goods = goodsRepository.findByName(goodsName);
+//
+//    if (!(client == null) && !(address == null) && !(date == null) && !(goods == null)) {
+//      Order order = new Order(client, date, address);
+//      OrderLine orderLine = new OrderLine(order, goods, count);
+//      addOrder(order);
+//      addOrderLine(orderLine);
+//      return orderLine;
+//    }
+    return null;
+  }
 
   public OrderLine getOrderLineByOrderId(Long orderId) {
     return orderLineRepository.findByOrderItem(getOrderById(orderId));
-  }
-
-  public Map<Order, OrderLine> getAllFullOrders() {
-    Map<Order, OrderLine> resultMap = new LinkedHashMap<>();
-    List<Order> orderList = getAllOrders();
-
-    for (Order order : orderList) {
-      OrderLine orderLine = getOrderLineByOrder(order);
-      if (orderLine != null) {
-        resultMap.put(order, orderLine);
-      }
-    }
-    return resultMap;
   }
 }
