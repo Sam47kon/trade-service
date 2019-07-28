@@ -5,6 +5,7 @@ import com.tradeservice.testproject.repositories.GoodsRepository;
 import com.tradeservice.testproject.services.GoodsService;
 import java.util.List;
 import java.util.Map;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,7 +28,11 @@ public class GoodsServiceImpl implements GoodsService {
   @Override
   public Goods getById(Long id) {
     Optional<Goods> optionalGoods = goodsRepository.findById(id);
-    return optionalGoods.orElse(null);
+    Goods goods = optionalGoods.orElse(null);
+    if (goods == null) {
+      throw new NoSuchElementException("Такого товара нет! ");
+    }
+    return goods;
   }
 
   @Override
@@ -55,14 +60,15 @@ public class GoodsServiceImpl implements GoodsService {
   public Goods editWithoutId(Map<String, String> map) {
     String oldName = map.get("oldName");
     if (oldName == null) {
-      return null;
+      throw new IllegalArgumentException("Необходим параметр oldName! ");
     }
     String newName = map.get("newName");
     String strNewPrice = map.get("newPrice");
 
-
-    Goods result = goodsRepository.findByName(oldName);
-    if (result != null) {
+    Goods result = getByName(oldName);
+    if (result == null) {
+      throw new NoSuchElementException("Такого товара нет! ");
+    }
       if (newName != null) {
         result.setName(newName);
       }
@@ -72,7 +78,4 @@ public class GoodsServiceImpl implements GoodsService {
       }
       return goodsRepository.saveAndFlush(result);
     }
-    return null;
-  }
-
 }

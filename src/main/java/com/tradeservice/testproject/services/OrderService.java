@@ -6,17 +6,15 @@ import java.util.List;
 
 public interface OrderService {
 
-  Order addOrder(Order obj);
+  void addOrder(Order obj);
 
   Order getOrderById(Long id);
 
-  Order ediOrder(Order obj);
+  void ediOrder(Order obj);
 
   void deleteOrder(Long id);
 
-  List<Order> getAllOrders();
-
-  Order getOrderByClient(String client);
+  List<Order> getAllOrders();  // TODO нужно ли?
 
 
   OrderLine addOrderLine(OrderLine orderLine);
@@ -27,7 +25,7 @@ public interface OrderService {
 
   void deleteOrderLine(Long id);
 
-  OrderLine getOrderLineByOrder(Order order_item);
+//  OrderLine getOrderLineByOrder(Order order_item);
 
-  List<OrderLine> getAllOrderLine();
+  List<OrderLine> getAllOrderLines();
 }

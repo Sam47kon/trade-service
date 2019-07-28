@@ -34,11 +34,6 @@ public class Goods {
     this.price = price;
   }
 
-  public Goods(Long goodsId, String name, Double price) {
-    this.goodsId = goodsId;
-    this.name = name;
-    this.price = price;
-  }
 
   public Long getGoodsId() {
     return goodsId;

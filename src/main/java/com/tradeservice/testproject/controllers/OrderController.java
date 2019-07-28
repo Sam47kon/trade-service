@@ -5,6 +5,7 @@ import com.tradeservice.testproject.entities.OrderLine;
 import com.tradeservice.testproject.services.impl.OrderServiceImpl;
 import java.util.List;
 import java.util.Map;
+import java.util.NoSuchElementException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -27,8 +28,18 @@ public class OrderController {
 
   /**
    * 1) - добавление нового заказа // ГОТОВО
+   *
    * @param map - {client:?, date:?, address:?, count:?, goodsName:?}. count - default = 1
    * @return map, где все данные по заказу.
+   *
+   *  http://localhost:8080/neworder POST JSON:
+   * {
+   *     "client": "Клиент 1",
+   *     "date": "1995/11/30",
+   *     "address": "адрес доставки 1",
+   *     "count": 5,
+   *     "goodsName": "Товар 1"
+   * }
    */
   @PostMapping("/neworder")
   @ResponseBody
@@ -37,10 +48,20 @@ public class OrderController {
   }
 
   /**
-   * 2)	- изменение существующего заказа // TODO остановился здесь
+   * 2)	- изменение существующего заказа // ГОТОВО
    *
-   * @param map - {client:?, date:?, address:?, count:?, goodsName:?}.
+   * @param map - {id, client:?, date:?, address:?, count:?, goodsName:?}. id - orderLine
    * @return map, где все данные по заказу.
+   *
+   *  http://localhost:8080/editorder POST JSON:
+   * {
+   *     "id": 1,
+   *     "client": "Клиент 1 изменено",
+   *     "date": "2005/11/30",
+   *     "address": "адрес доставки 1 изменен",
+   *     "count": 999,
+   *     "goodsName": "Товар 1"
+   * }
    */
   @PostMapping("/editorder")
   @ResponseBody
@@ -48,50 +69,52 @@ public class OrderController {
     return orderService.editFullOrder(map);
   }
 
+  /**
+   * 3)	- удаление заказа  // ГОТОВО
+   *
+   * @param id - id заказа (OrderLine)
+   * @return - "удалено" при успехе
+   *
+   * http://localhost:8080/deleteorder POST JSON: 1 (или другой id)
+   */
+  @PostMapping("/deleteorder")
+  @ResponseBody
+  public String deleteFullOrder(@RequestBody Long id) {
+    orderService.deleteFullOrder(id);
+    return "Удалено";
+  }
 
   /**
    * 4)	- получение всех заказов  // ГОТОВО
+   *
+   *  http://localhost:8080/allorders GET
    */
   @GetMapping("/allorders")
   public List<OrderLine> getAllFullOrders() {
-    return orderService.getAllOrderLine();
+    return orderService.getAllOrderLines();
+  }
+
+  /**
+   * 5)	- получение определенного заказа по id // ГОТОВО
+   *
+   * @param id - id OrderLine
+   * @return - OrderLine
+   * @throws NoSuchElementException (Такого Заказа нет)
+   *
+   * http://localhost:8080/allorders GET + JSON: 1 (или другой id)
+   */
+  @GetMapping("/getorderline")
+  @ResponseBody
+  public OrderLine getOrderLineById(@RequestBody Long id) {
+    return orderService.getOrderLineById(id);
   }
 
 
   // получение Order по его id // ГОТОВО
   @GetMapping("/getpreorder")
   @ResponseBody
-  public Order getOrder(@RequestBody Map<String, String> map) {
-    Order resultOrder = null;
-    String strId;
-
-    strId = map.get("id");
-    if (strId != null) {
-      resultOrder = orderService.getOrderById(Long.parseLong(strId));
-    } else {
-      String client = map.get("client");
-      if (client != null) {
-        resultOrder = orderService.getOrderByClient(client);
-      }
-    }
-    return resultOrder;
+  public Order getOrder(@RequestBody Long id) {
+    return orderService.getOrderById(id);
   }
 
-  // получение OrderLine по orderId либо по id самого OrderLine // ГОТОВО
-  @GetMapping("/getorderline")
-  @ResponseBody
-  public OrderLine getOrderLine(@RequestBody Map<String, String> map) {
-    OrderLine resultOrderLine = null;
-
-    String strOrderId = map.get("orderId");
-    if (strOrderId != null) {
-      resultOrderLine = orderService.getOrderLineByOrderId(Long.parseLong(strOrderId));
-    } else {
-      String strOrderLineId = map.get("id");
-      if (strOrderLineId != null) {
-        resultOrderLine = orderService.getOrderLineById(Long.parseLong(strOrderLineId));
-      }
-    }
-    return resultOrderLine;
-  }
 }

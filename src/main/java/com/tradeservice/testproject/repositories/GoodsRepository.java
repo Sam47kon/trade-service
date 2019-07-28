@@ -8,5 +8,5 @@ public interface GoodsRepository extends JpaRepository<Goods, Long> {
 
   Goods findByName(String name);
 
-  List<Goods> findByPriceLike(Double price);
+  List<Goods> findByPriceLike(Double price); // для будущего
 }
