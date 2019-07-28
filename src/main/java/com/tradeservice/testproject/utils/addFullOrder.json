@@ -1,0 +1,11 @@
+{
+  "orderItem": {
+    "client": "Клиент 1",
+    "date": "2019-11-15",
+    "address": "адрес доставки 1"
+  },
+  "goods": {
+    "goodsId": 1
+  },
+  "count": 5
+}

@@ -1,31 +1,19 @@
 package com.tradeservice.testproject.services;
 
-import com.tradeservice.testproject.entities.Order;
 import com.tradeservice.testproject.entities.OrderLine;
 import java.util.List;
+import java.util.Map;
 
 public interface OrderService {
 
-  void addOrder(Order obj);
+  OrderLine addFullOrder(Map<String, String> map);
 
-  Order getOrderById(Long id);
+  void deleteFullOrder(Long id);
 
-  void ediOrder(Order obj);
-
-  void deleteOrder(Long id);
-
-  List<Order> getAllOrders();  // TODO нужно ли?
-
-
-  OrderLine addOrderLine(OrderLine orderLine);
+  OrderLine editFullOrder(Map<String, String> map);
 
   OrderLine getOrderLineById(Long id);
 
-  OrderLine editOrderLine(OrderLine orderLine);
-
-  void deleteOrderLine(Long id);
-
-//  OrderLine getOrderLineByOrder(Order order_item);
-
   List<OrderLine> getAllOrderLines();
+
 }

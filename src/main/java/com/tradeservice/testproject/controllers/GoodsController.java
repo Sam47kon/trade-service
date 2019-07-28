@@ -1,13 +1,15 @@
 package com.tradeservice.testproject.controllers;
 
 import com.tradeservice.testproject.entities.Goods;
+import com.tradeservice.testproject.services.GoodsService;
 import com.tradeservice.testproject.services.impl.GoodsServiceImpl;
 import java.util.List;
-import java.util.Map;
 import java.util.NoSuchElementException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -17,10 +19,10 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(value = "/catalog")
 public class GoodsController {
 
-  private GoodsServiceImpl goodsService;
+  private GoodsService goodsService;
 
   @Autowired
-  public GoodsController(GoodsServiceImpl goodsService) {
+  public GoodsController(GoodsService goodsService) {
     this.goodsService = goodsService;
   }
 
@@ -31,13 +33,13 @@ public class GoodsController {
    * @param goods добавляемый товар {name:?, price:?}
    * @return сам товар, если успешно
    *
-   *  http://localhost:8080/catalog/addgoods POST JSON:
+   *  http://localhost:8080/catalog/ POST JSON:
    * {
    *     "name": "Товар 1",
    *     "price": 999
    * }
    */
-  @PostMapping("/addgoods")
+  @PostMapping("/")
   @ResponseBody
   public Goods addGoods(@RequestBody Goods goods) {
     return goodsService.add(goods);
@@ -49,49 +51,27 @@ public class GoodsController {
    * @param goods товар {goodId:?, name:?, price:?}
    * @return сам товар, или null если не найдено.
    *
-   *  http://localhost:8080/catalog/editgoods POST JSON:
+   *  http://localhost:8080/catalog/ PUT JSON:
    * {
    *     "goodsId": 1,
    *     "name": "Товар 1 изменен",
    *     "price": 444
    * }
    */
-  @PostMapping("/editgoods")
+  @PutMapping("/")
   @ResponseBody
   public Goods editGoods(@RequestBody Goods goods) {
-    if (goods.getGoodsId() != null) {
       return goodsService.edit(goods);
-    }
-    return null;
-  }
-
-  /**
-   * 7.1) - изменение существующего товара, поиск в базе по имени товара. // ГОТОВО
-   *
-   * @param map {oldName:?, newName:?, newPrice:?}. newName и newPrice - опционально
-   * @return сам товар, или null если не найдено.
-   *
-   *  http://localhost:8080/catalog/editgoodsbyname POST JSON:
-   * {
-   *     "oldName": "Товар 1",
-   *     "newName": "Товар 1 изменен",
-   *     "newPrice": 54
-   * }
-   */
-  @PostMapping("/editgoodsbyname")
-  @ResponseBody
-  public Goods editGoodsByName(@RequestBody Map<String, String> map) {
-    return goodsService.editWithoutId(map);
   }
 
   /**
    * 8)	- удаление товара // ГОТОВО
    *
    * @param id - id товара
-   * @return "Удалено", при успехе http://localhost:8080/catalog/deletegoods POST JSON: 1 (или
+   * @return "Удалено", при успехе http://localhost:8080/catalog/ DELETE JSON: 1 (или
    * другой id)
    */
-  @PostMapping("/deletegoods")
+  @DeleteMapping("/")
   @ResponseBody
   public String deleteGoods(@RequestBody Long id) {
     goodsService.delete(id);
@@ -116,9 +96,9 @@ public class GoodsController {
    * @return товар, если найден
    * @throws NoSuchElementException (Такого товара нет!)
    *
-   * http://localhost:8080/catalog/getgoods GET + JSON: 1 (или любой id)
+   * http://localhost:8080/catalog/ GET + JSON: 1 (или любой id)
    */
-  @GetMapping("/getgoods")
+  @GetMapping("/")
   @ResponseBody
   public Goods getGoodsById(@RequestBody Long id) {
     return goodsService.getById(id);
