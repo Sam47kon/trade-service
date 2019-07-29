@@ -10,7 +10,7 @@
     <relativePath/> <!-- lookup parent from repository -->
   </parent>
   <groupId>com.trade-service</groupId>
-  <artifactId>TestProject</artifactId>
+  <artifactId>Project for 21 Century</artifactId>
   <version>1.0</version>
   <packaging>war</packaging>
   <name>TestProject</name>
