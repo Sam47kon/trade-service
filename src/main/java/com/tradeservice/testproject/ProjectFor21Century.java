@@ -6,7 +6,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class ProjectFor21Century {
 
-  //  TODO переименовать проект
   public static void main(String[] args) {
     SpringApplication.run(ProjectFor21Century.class, args);
   }

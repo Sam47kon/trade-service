@@ -27,11 +27,10 @@ public class GoodsServiceImpl implements GoodsService {
   @Override
   public Goods getById(Long id) {
     Optional<Goods> optionalGoods = goodsRepository.findById(id);
-    Goods goods = optionalGoods.orElse(null);
-    if (goods == null) {
+    if (optionalGoods.isEmpty()) {
       throw new NoSuchElementException("Такого товара нет! ");
     }
-    return goods;
+    return optionalGoods.get();
   }
 
   @Override
