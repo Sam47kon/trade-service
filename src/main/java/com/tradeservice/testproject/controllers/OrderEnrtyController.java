@@ -1,7 +1,7 @@
 package com.tradeservice.testproject.controllers;
 
 import com.tradeservice.testproject.entities.OrderLine;
-import com.tradeservice.testproject.services.OrderService;
+import com.tradeservice.testproject.services.OrderEntryService;
 import java.util.List;
 import java.util.NoSuchElementException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,13 +17,13 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/orders")
-public class OrderController {
+public class OrderEnrtyController {
 
-  private OrderService orderService;
+  private OrderEntryService orderEntryService;
 
   @Autowired
-  public OrderController(OrderService orderService) {
-    this.orderService = orderService;
+  public OrderEnrtyController(OrderEntryService orderEntryService) {
+    this.orderEntryService = orderEntryService;
   }
 
 
@@ -32,13 +32,13 @@ public class OrderController {
    *
    * @return OrderLine, где все данные по заказу.
    *
-   * http://localhost:8080/orders/ POST JSON:
+   * POST http://localhost:8080/orders/ JSON:
    * @see com.tradeservice.testproject.utils addFullOrder.json
    */
-  @PostMapping("/")
+  @PostMapping
   @ResponseBody
   public OrderLine addFullOrder(@RequestBody OrderLine orderLine) {
-    return orderService.addFullOrder(orderLine);
+    return orderEntryService.addFullOrder(orderLine);
   }
 
   /**
@@ -46,13 +46,13 @@ public class OrderController {
    *
    * @return OrderLine, где все данные по заказу.
    *
-   * http://localhost:8080/orders/ PUT JSON:
+   * PUT http://localhost:8080/orders/ JSON:
    * @see com.tradeservice.testproject.utils editFullOrder.json
    */
-  @PutMapping("/")
+  @PutMapping("/{id}")
   @ResponseBody
-  public OrderLine editFullOrder(@RequestBody OrderLine orderLine) {
-    return orderService.editFullOrder(orderLine);
+  public OrderLine editFullOrder(@RequestBody OrderLine newOrderLine, @PathVariable Long id) {
+    return orderEntryService.editFullOrder(newOrderLine, id);
   }
 
   /**
@@ -61,23 +61,23 @@ public class OrderController {
    * @param id - id заказа (OrderLine)
    * @return - "удалено" при успехе
    *
-   * http://localhost:8080/orders/{id} DELETE
+   * DELETE http://localhost:8080/orders/{id}
    */
   @DeleteMapping("/{id}")
   @ResponseBody
   public String deleteFullOrder(@PathVariable Long id) {
-    orderService.deleteFullOrder(id);
+    orderEntryService.deleteFullOrder(id);
     return "Удалено";
   }
 
   /**
    * 4)	- получение всех заказов
    *
-   * http://localhost:8080/orders GET
+   * GET http://localhost:8080/orders/
    */
-  @GetMapping("")
+  @GetMapping
   public List<OrderLine> getAllFullOrders() {
-    return orderService.getAllOrderLines();
+    return orderEntryService.getAllOrderLines();
   }
 
   /**
@@ -87,11 +87,11 @@ public class OrderController {
    * @return - OrderLine
    * @throws NoSuchElementException (Такого Заказа нет)
    *
-   * http://localhost:8080/orders/{id} GET
+   * GET http://localhost:8080/orders/{id}
    */
   @GetMapping("/{id}")
   @ResponseBody
   public OrderLine getOrderLineById(@PathVariable Long id) {
-    return orderService.getOrderLineById(id);
+    return orderEntryService.getOrderLineById(id);
   }
 }

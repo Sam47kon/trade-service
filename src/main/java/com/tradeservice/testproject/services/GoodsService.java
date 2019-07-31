@@ -9,7 +9,7 @@ public interface GoodsService {
 
   Goods getById(Long id);
 
-  Goods edit(Goods goods);
+  Goods edit(Goods newGoods, Long id);
 
   void delete(Long id);
 

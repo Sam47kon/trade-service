@@ -1,27 +1,30 @@
 package com.tradeservice.testproject.services.impl;
 
+import com.tradeservice.testproject.ecxeptions.OrderEntryNotFoundException;
 import com.tradeservice.testproject.entities.Goods;
 import com.tradeservice.testproject.entities.Order;
 import com.tradeservice.testproject.entities.OrderLine;
 import com.tradeservice.testproject.repositories.OrderLineRepository;
 import com.tradeservice.testproject.repositories.OrderRepository;
 import com.tradeservice.testproject.services.GoodsService;
-import com.tradeservice.testproject.services.OrderService;
+import com.tradeservice.testproject.services.OrderEntryService;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+@Slf4j
 @Service
-public class OrderServiceImpl implements OrderService {
+public class OrderEnrryServiceImpl implements OrderEntryService {
 
   private OrderRepository orderRepository;
   private OrderLineRepository orderLineRepository;
   private GoodsService goodsService;
 
   @Autowired
-  public OrderServiceImpl(OrderRepository orderRepository,
+  public OrderEnrryServiceImpl(OrderRepository orderRepository,
       OrderLineRepository orderLineRepository, GoodsService goodsService) {
     this.orderRepository = orderRepository;
     this.orderLineRepository = orderLineRepository;
@@ -29,7 +32,6 @@ public class OrderServiceImpl implements OrderService {
   }
 
 
-  // добавление полного заказа (OrderLine)
   @Override
   public OrderLine addFullOrder(OrderLine orderLine) {
     Goods goods = goodsService.getById(orderLine.getGoods().getGoodsId());
@@ -39,19 +41,18 @@ public class OrderServiceImpl implements OrderService {
     return addOrderLine(orderLine);
   }
 
-  // изменение заказа
   @Override
-  public OrderLine editFullOrder(OrderLine orderLine) {
-    Goods goods = goodsService.getById(orderLine.getGoods().getGoodsId());
-    orderLine.setGoods(goods);
-    Order order = orderLine.getOrderItem();
-    ediOrder(order);
-    return editOrderLine(orderLine);
+  public OrderLine editFullOrder(OrderLine newOrderLine, Long id) {
+    OrderLine result =
+        orderLineRepository.findById(id).orElseThrow(() -> new OrderEntryNotFoundException(id));
+    Goods goods = goodsService.getById(newOrderLine.getGoods().getGoodsId());
+    result.setGoods(goods);
+    result.setOrderItem(ediOrder(newOrderLine.getOrderItem()));
+    return editOrderLine(result);
   }
 
-  // удаление заказа, по его id
   @Override
-  public void deleteFullOrder(Long id) {
+  public void deleteFullOrder(Long id) { // TODO остановился здесь
     OrderLine orderLine = getOrderLineById(id);
     if (orderLine == null) {
       throw new NoSuchElementException("Такого заказа нет");
@@ -60,18 +61,15 @@ public class OrderServiceImpl implements OrderService {
     deleteOrder(orderLine.getOrderItem().getOrderId());
   }
 
-  //получение заказа по его id
   @Override
   public OrderLine getOrderLineById(Long id) {
     Optional<OrderLine> optionalOrderLine = orderLineRepository.findById(id);
-    OrderLine result = optionalOrderLine.orElse(null);
-    if (result == null) {
-      throw new NoSuchElementException("Такого Заказа нет");
+    if (optionalOrderLine.isPresent()) {
+      return optionalOrderLine.get();
     }
-    return result;
+    throw new NoSuchElementException("Такого Заказа нет");
   }
 
-  // полоучение всех заказов
   @Override
   public List<OrderLine> getAllOrderLines() {
     return orderLineRepository.findAll();
@@ -86,8 +84,8 @@ public class OrderServiceImpl implements OrderService {
     orderRepository.deleteById(id);
   }
 
-  private void ediOrder(Order order) {
-    orderRepository.saveAndFlush(order);
+  private Order ediOrder(Order order) {
+    return orderRepository.saveAndFlush(order);
   }
 
   private OrderLine addOrderLine(OrderLine orderLine) {

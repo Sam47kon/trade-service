@@ -8,9 +8,11 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import lombok.Data;
 
+@Data
 @Entity
-@Table(name = "OrderLine")
+@Table(name = "order_lines")
 public class OrderLine {
 
   @Id
@@ -27,55 +29,4 @@ public class OrderLine {
 
   @Column(name = "Count")
   private int count;
-
-  public OrderLine() {
-  }
-
-  public OrderLine(Order orderItem, Goods goods, int count) {
-    this.orderItem = orderItem;
-    this.goods = goods;
-    this.count = count;
-  }
-
-  public Long getId() {
-    return id;
-  }
-
-  public void setId(Long id) {
-    this.id = id;
-  }
-
-  public Order getOrderItem() {
-    return orderItem;
-  }
-
-  public void setOrderItem(Order orderItem) {
-    this.orderItem = orderItem;
-  }
-
-  public Goods getGoods() {
-    return goods;
-  }
-
-  public void setGoods(Goods goods) {
-    this.goods = goods;
-  }
-
-  public int getCount() {
-    return count;
-  }
-
-  public void setCount(int count) {
-    this.count = count;
-  }
-
-  @Override
-  public String toString() {
-    return "OrderLine{" +
-        "id=" + id +
-        ", orderItem=" + orderItem +
-        ", goods=" + goods +
-        ", count=" + count +
-        '}';
-  }
 }

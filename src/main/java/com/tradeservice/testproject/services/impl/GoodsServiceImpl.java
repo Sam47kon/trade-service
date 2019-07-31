@@ -1,11 +1,10 @@
 package com.tradeservice.testproject.services.impl;
 
+import com.tradeservice.testproject.ecxeptions.GoodsNotFoundException;
 import com.tradeservice.testproject.entities.Goods;
 import com.tradeservice.testproject.repositories.GoodsRepository;
 import com.tradeservice.testproject.services.GoodsService;
 import java.util.List;
-import java.util.NoSuchElementException;
-import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -26,19 +25,18 @@ public class GoodsServiceImpl implements GoodsService {
 
   @Override
   public Goods getById(Long id) {
-    Optional<Goods> optionalGoods = goodsRepository.findById(id);
-    if (optionalGoods.isEmpty()) {
-      throw new NoSuchElementException("Такого товара нет! ");
-    }
-    return optionalGoods.get();
+    return goodsRepository.findById(id).orElseThrow(() -> new GoodsNotFoundException(id));
   }
 
   @Override
   public void delete(Long id) {
     if (id == null) {
-      throw new NullPointerException("Не указан goodsId");
+      throw new GoodsNotFoundException(id);
     }
-    goodsRepository.deleteById(id);
+    goodsRepository.findById(id).map(goods -> {
+      goodsRepository.deleteById(goods.getGoodsId());
+      return 1;
+    }).orElseThrow(() -> new GoodsNotFoundException(id));
   }
 
   @Override
@@ -47,11 +45,13 @@ public class GoodsServiceImpl implements GoodsService {
   }
 
   @Override
-  public Goods edit(Goods goods) {
-    if (goods.getGoodsId() == null) {
-      throw new NullPointerException("Не указан goodsId");
-    }
-    return goodsRepository.saveAndFlush(goods);
+  public Goods edit(Goods newGoods, Long id) {
+    return goodsRepository.findById(id)
+        .map(goods -> {
+          goods.setName(newGoods.getName());
+          goods.setPrice(newGoods.getPrice());
+          return goodsRepository.saveAndFlush(goods);
+        }).orElseThrow(() -> new GoodsNotFoundException(id));
   }
 
   @Override

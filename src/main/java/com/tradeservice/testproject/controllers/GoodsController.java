@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping(value = "/catalog")
+@RequestMapping(value = "/goods")
 public class GoodsController {
 
   private GoodsService goodsService;
@@ -32,10 +32,10 @@ public class GoodsController {
    * @param goods добавляемый товар
    * @return сам товар, если успешно (но только с id goods)
    *
-   * http://localhost:8080/catalog/ POST JSON:
+   * POST http://localhost:8080/goods/ JSON:
    * @see com.tradeservice.testproject.utils addGoods.json
    */
-  @PostMapping("/")
+  @PostMapping
   @ResponseBody
   public Goods addGoods(@RequestBody Goods goods) {
     return goodsService.add(goods);
@@ -43,39 +43,37 @@ public class GoodsController {
 
   /**
    * 7) - изменение существующего товара, поиск в базе по id
-   * @param goods товар {goodId:?, name:?, price:?}
-   * @return сам товар, или null если не найдено.
+   * @param newGoods товар
+   * @return сам товар
    *
-   *  http://localhost:8080/catalog/ PUT JSON:
+   * PUT http://localhost:8080/goods/{id} JSON:
    * @see com.tradeservice.testproject.utils editGoods.json
    */
-  @PutMapping("/")
+  @PutMapping("/{id}")
   @ResponseBody
-  public Goods editGoods(@RequestBody Goods goods) {
-      return goodsService.edit(goods);
+  public Goods editGoods(@RequestBody Goods newGoods, @PathVariable Long id) {
+    return goodsService.edit(newGoods, id);
   }
 
   /**
    * 8)	- удаление товара
    * @param id - id товара
-   * @return "Удалено", при успехе
    *
-   * http://localhost:8080/catalog/{id} DELETE
+   * DELETE http://localhost:8080/goods/{id}
    */
   @DeleteMapping("/{id}")
   @ResponseBody
-  public String deleteGoods(@PathVariable Long id) {
+  public void deleteGoods(@PathVariable Long id) {
     goodsService.delete(id);
-    return "Удалено";
   }
 
   /**
    * 9) - получение всех товаров
    * @return List все товары
    *
-   *  http://localhost:8080/catalog GET
+   * GET http://localhost:8080/goods
    */
-  @GetMapping("")
+  @GetMapping
   public List<Goods> getAllGoods() {
     return goodsService.getAll();
   }
@@ -84,9 +82,8 @@ public class GoodsController {
    * 10)	- получение определенного товара по id
    * @param id - id товара
    * @return товар, если найден
-   * @throws NoSuchElementException (Такого товара нет!)
    *
-   * http://localhost:8080/catalog/{id} GET
+   * GET http://localhost:8080/catalog/{id}
    */
   @GetMapping("/{id}")
   @ResponseBody
