@@ -1,0 +1,19 @@
+{
+  "client": "Клиент 3",
+  "date": "2019-11-15",
+  "address": "адрес доставки 3",
+  "orderItems": [
+    {
+      "goods": {
+        "goodsId": 1
+      },
+      "count": 33
+    },
+    {
+      "goods": {
+        "goodsId": 2
+      },
+      "count": 44
+    }
+  ]
+}
