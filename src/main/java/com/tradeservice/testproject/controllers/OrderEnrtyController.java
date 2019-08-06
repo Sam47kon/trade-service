@@ -46,7 +46,7 @@ public class OrderEnrtyController {
    *
    * @return OrderLine, где все данные по заказу.
    *
-   * PUT http://localhost:8080/orders/ JSON:
+   * PUT http://localhost:8080/orders/{id} JSON:
    * @see com.tradeservice.testproject.utils editFullOrder.json
    */
   @PutMapping("/{id}")
@@ -59,15 +59,13 @@ public class OrderEnrtyController {
    * 3)	- удаление заказа
    *
    * @param id - id заказа (OrderLine)
-   * @return - "удалено" при успехе
    *
    * DELETE http://localhost:8080/orders/{id}
    */
   @DeleteMapping("/{id}")
   @ResponseBody
-  public String deleteFullOrder(@PathVariable Long id) {
+  public void deleteFullOrder(@PathVariable Long id) {
     orderEntryService.deleteFullOrder(id);
-    return "Удалено";
   }
 
   /**

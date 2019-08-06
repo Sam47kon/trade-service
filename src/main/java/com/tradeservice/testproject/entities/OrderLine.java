@@ -19,11 +19,11 @@ public class OrderLine {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
-  @ManyToOne()
+  @ManyToOne
   @JoinColumn(name = "orderId")
   private Order orderItem;
 
-  @ManyToOne()
+  @ManyToOne
   @JoinColumn(name = "goodsId")
   private Goods goods;
 

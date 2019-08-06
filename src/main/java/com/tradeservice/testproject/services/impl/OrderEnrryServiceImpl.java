@@ -9,8 +9,6 @@ import com.tradeservice.testproject.repositories.OrderRepository;
 import com.tradeservice.testproject.services.GoodsService;
 import com.tradeservice.testproject.services.OrderEntryService;
 import java.util.List;
-import java.util.NoSuchElementException;
-import java.util.Optional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -52,22 +50,21 @@ public class OrderEnrryServiceImpl implements OrderEntryService {
   }
 
   @Override
-  public void deleteFullOrder(Long id) { // TODO остановился здесь
+  public void deleteFullOrder(Long id) {
     OrderLine orderLine = getOrderLineById(id);
     if (orderLine == null) {
-      throw new NoSuchElementException("Такого заказа нет");
+      throw new OrderEntryNotFoundException(id);
     }
-    deleteOrderLine(id);
-    deleteOrder(orderLine.getOrderItem().getOrderId());
+    orderLineRepository.findById(id).map(result -> {
+      orderLineRepository.deleteById(id);
+      orderRepository.deleteById(result.getOrderItem().getOrderId());
+      return 1;
+    }).orElseThrow(() -> new OrderEntryNotFoundException(id));
   }
 
   @Override
   public OrderLine getOrderLineById(Long id) {
-    Optional<OrderLine> optionalOrderLine = orderLineRepository.findById(id);
-    if (optionalOrderLine.isPresent()) {
-      return optionalOrderLine.get();
-    }
-    throw new NoSuchElementException("Такого Заказа нет");
+    return orderLineRepository.findById(id).orElseThrow(() -> new OrderEntryNotFoundException(id));
   }
 
   @Override
@@ -80,9 +77,6 @@ public class OrderEnrryServiceImpl implements OrderEntryService {
     return orderRepository.save(order);
   }
 
-  private void deleteOrder(Long id) {
-    orderRepository.deleteById(id);
-  }
 
   private Order ediOrder(Order order) {
     return orderRepository.saveAndFlush(order);
@@ -96,8 +90,5 @@ public class OrderEnrryServiceImpl implements OrderEntryService {
     return orderLineRepository.saveAndFlush(orderLine);
   }
 
-  private void deleteOrderLine(Long id) {
-    orderLineRepository.deleteById(id);
-  }
 
 }
