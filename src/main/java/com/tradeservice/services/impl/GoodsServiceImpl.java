@@ -4,6 +4,7 @@ import com.tradeservice.services.GoodsService;
 import com.tradeservice.ecxeptions.GoodsNotFoundException;
 import com.tradeservice.entities.Goods;
 import com.tradeservice.repositories.GoodsRepository;
+import java.util.Collection;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -42,6 +43,11 @@ public class GoodsServiceImpl implements GoodsService {
   @Override
   public Goods getByName(String name) {
     return goodsRepository.findByName(name);
+  }
+
+  @Override
+  public Collection<Goods> getAllById(Collection<Long> collection) {
+    return goodsRepository.findAllById(collection);
   }
 
   @Override

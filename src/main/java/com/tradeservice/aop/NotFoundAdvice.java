@@ -1,4 +1,4 @@
-package com.tradeservice.controllers;
+package com.tradeservice.aop;
 
 import com.tradeservice.ecxeptions.GoodsNotFoundException;
 import com.tradeservice.ecxeptions.OrderEntryNotFoundException;

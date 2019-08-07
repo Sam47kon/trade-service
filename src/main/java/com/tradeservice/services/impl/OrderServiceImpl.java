@@ -1,12 +1,16 @@
 package com.tradeservice.services.impl;
 
+import static java.util.stream.Collectors.toList;
+
 import com.tradeservice.ecxeptions.OrderEntryNotFoundException;
 import com.tradeservice.entities.Goods;
 import com.tradeservice.entities.Order;
+import com.tradeservice.entities.OrderLine;
 import com.tradeservice.repositories.OrderLineRepository;
 import com.tradeservice.repositories.OrderRepository;
 import com.tradeservice.services.GoodsService;
 import com.tradeservice.services.OrderService;
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,11 +53,17 @@ public class OrderServiceImpl implements OrderService {
   }
 
   private void addOrderLines(Order newOrder, Order result) {
+    List<Long> collectId = newOrder.getOrderItems().stream().map(OrderLine::getId)
+        .collect(toList());
+    Collection<Goods> goodsCollection = goodsService.getAllById(collectId);
+
+// todo GREG
+
+    orderLineRepository.saveAll(orderLine);
     newOrder.getOrderItems().forEach(orderLine -> {
-      Goods goods = goodsService.getById(orderLine.getGoods().getGoodsId());
-      orderLine.setGoods(goods);
+
+      orderLine.setGoods(goodsCollection);
       orderLine.setOrderItem(result);
-      orderLineRepository.save(orderLine);
     });
     result.setOrderItems(newOrder.getOrderItems());
   }
