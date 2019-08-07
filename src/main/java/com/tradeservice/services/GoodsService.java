@@ -1,15 +1,12 @@
 package com.tradeservice.services;
 
 import com.tradeservice.entities.Goods;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 public interface GoodsService {
 
   Goods add(Goods goods);
-
-  Goods getById(Long id);
 
   Goods edit(Goods newGoods, Long id);
 
@@ -17,7 +14,5 @@ public interface GoodsService {
 
   List<Goods> getAll();
 
-  Goods getByName(String name);
-
-  Collection<Goods> getAllById(Collection<Long> collection);
+  Optional<Goods> getById(Long id);
 }

@@ -5,6 +5,8 @@ import com.tradeservice.entities.Order;
 import com.tradeservice.services.OrderService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -12,83 +14,76 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/orders")
-public class OrderController {
+public class OrderAPI {
 
   private OrderService orderService;
 
   @Autowired
-  public OrderController(OrderService orderService) {
+  public OrderAPI(OrderService orderService) {
     this.orderService = orderService;
   }
 
 
   /**
    * 1) - добавление нового заказа
-   *
-   * @return Order, где все данные по заказу.
-   *
+   * @return HttpStatus.CREATED if ok, and added Order, где все данные по заказу.
    * POST http://localhost:8080/orders/ JSON:
    * @see com.tradeservice.utils addFullOrder.json
    */
   @PostMapping
-  @ResponseBody
-  public Order addFullOrder(@RequestBody Order order) {
-    return orderService.add(order);
+  public ResponseEntity<Order> addFullOrder(@RequestBody Order newOrderRequest) {
+    return ResponseEntity.status(HttpStatus.CREATED).body(orderService.add(newOrderRequest));
   }
 
   /**
    * 2)	- изменение существующего заказа
-   *
-   * @return Order, где все данные по измененному заказу.
-   *
+   * @param newOrderRequest - заказ
+   * @param id id изменяемого
+   * @return HttpStatus.ACCEPTED, Order, где все данные по измененному заказу.
    * PUT http://localhost:8080/orders/{id} JSON:
    * @see com.tradeservice.utils editFullOrder.json
    */
   @PutMapping("/{id}")
-  @ResponseBody
-  public Order editFullOrder(@RequestBody Order newOrder, @PathVariable Long id) {
-    return orderService.edit(newOrder, id);
+  public ResponseEntity<Order> editFullOrder(@RequestBody Order newOrderRequest,
+      @PathVariable Long id) {
+    return ResponseEntity.accepted().body(orderService.edit(newOrderRequest, id));
   }
 
   /**
    * 3)	- удаление заказа
-   *
-   * @param id - id заказа (OrderLine)
-   *
+   * @param id - id заказа (Order)
+   * @return HttpStatus.ACCEPTED
    * DELETE http://localhost:8080/orders/{id}
    */
   @DeleteMapping("/{id}")
-  @ResponseBody
-  public void deleteFullOrder(@PathVariable Long id) {
+  public ResponseEntity deleteFullOrder(@PathVariable Long id) {
     orderService.delete(id);
+    return ResponseEntity.accepted().build();
   }
 
   /**
    * 4)	- получение всех заказов
-   *
+   * @return HttpStatus.OK, List всех заказов
    * GET http://localhost:8080/orders/
    */
   @GetMapping
-  public List<Order> getAllFullOrders() {
-    return orderService.getAll();
+  public ResponseEntity<List<Order>> getAllFullOrders() {
+    return ResponseEntity.ok(orderService.getAll());
   }
 
   /**
    * 5)	- получение определенного заказа по id
-   *
-   * @param id - id OrderLine
-   * @return - Order
-   *
+   * @param id - id Order
+   * @return - HttpStatus.OK, Order
    * GET http://localhost:8080/orders/{id}
    */
   @GetMapping("/{id}")
-  @ResponseBody
-  public Order getOrderLineById(@PathVariable Long id) {
-    return orderService.getById(id).orElseThrow(() -> new OrderEntryNotFoundException(id));
+  public ResponseEntity<Order> getOrderLineById(@PathVariable Long id) {
+    return ResponseEntity
+        .ok(orderService.getById(id).orElseThrow(() -> new OrderEntryNotFoundException(id)));
   }
 }

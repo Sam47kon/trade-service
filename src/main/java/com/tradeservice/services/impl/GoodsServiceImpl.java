@@ -1,23 +1,24 @@
 package com.tradeservice.services.impl;
 
-import com.tradeservice.services.GoodsService;
 import com.tradeservice.ecxeptions.GoodsNotFoundException;
 import com.tradeservice.entities.Goods;
 import com.tradeservice.repositories.GoodsRepository;
-import java.util.Collection;
+import com.tradeservice.services.GoodsService;
 import java.util.List;
+import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class GoodsServiceImpl implements GoodsService {
 
-  private GoodsRepository goodsRepository;
+  private final GoodsRepository goodsRepository;
 
   @Autowired
   public GoodsServiceImpl(GoodsRepository goodsRepository) {
     this.goodsRepository = goodsRepository;
   }
+
 
   @Override
   public Goods add(Goods goods) {
@@ -25,43 +26,32 @@ public class GoodsServiceImpl implements GoodsService {
   }
 
   @Override
-  public Goods getById(Long id) {
-    return goodsRepository.findById(id).orElseThrow(() -> new GoodsNotFoundException(id));
-  }
-
-  @Override
-  public void delete(Long id) {
-    if (id == null) {
-      throw new GoodsNotFoundException(id);
-    }
-    goodsRepository.findById(id).map(goods -> {
-      goodsRepository.deleteById(goods.getGoodsId());
-      return 1;
-    }).orElseThrow(() -> new GoodsNotFoundException(id));
-  }
-
-  @Override
-  public Goods getByName(String name) {
-    return goodsRepository.findByName(name);
-  }
-
-  @Override
-  public Collection<Goods> getAllById(Collection<Long> collection) {
-    return goodsRepository.findAllById(collection);
-  }
-
-  @Override
   public Goods edit(Goods newGoods, Long id) {
     return goodsRepository.findById(id)
         .map(goods -> {
-          goods.setName(newGoods.getName());
-          goods.setPrice(newGoods.getPrice());
+          if (newGoods.getName() != null) {
+            goods.setName(newGoods.getName());
+          }
+          if (newGoods.getPrice() != null) {
+            goods.setPrice(newGoods.getPrice());
+          }
           return goodsRepository.saveAndFlush(goods);
         }).orElseThrow(() -> new GoodsNotFoundException(id));
   }
 
   @Override
+  public void delete(Long id) {
+    goodsRepository.findById(id).orElseThrow(() -> new GoodsNotFoundException(id));
+    goodsRepository.deleteById(id);
+  }
+
+  @Override
   public List<Goods> getAll() {
     return goodsRepository.findAll();
+  }
+
+  @Override
+  public Optional<Goods> getById(Long id) {
+    return goodsRepository.findById(id);
   }
 }

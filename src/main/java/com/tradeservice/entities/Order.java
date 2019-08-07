@@ -3,8 +3,10 @@ package com.tradeservice.entities;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -40,8 +42,9 @@ public class Order {
   @Column(name = "Address", nullable = false)
   private String address;
 
-  @OneToMany(mappedBy = "orderItem")
-  private Set<OrderLine> orderItems = new HashSet<>();
+  @OneToMany(fetch = FetchType.EAGER, orphanRemoval = true, mappedBy = "orderItem", cascade =
+      CascadeType.ALL)
+  private Set<OrderLine> orderLines = new HashSet<>();
 }
 
 

@@ -2,7 +2,7 @@
   "client": "Клиент 3",
   "date": "2019-11-15",
   "address": "адрес доставки 3",
-  "orderItems": [
+  "orderLines": [
     {
       "goods": {
         "goodsId": 1

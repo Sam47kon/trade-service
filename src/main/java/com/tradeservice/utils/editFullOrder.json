@@ -2,7 +2,7 @@
   "client": "Клиент 1 изменено",
   "date": "2019-11-15",
   "address": "адрес доставки 1 изменено",
-  "orderItems": [
+  "orderLines": [
     {
       "goods": {
         "goodsId": 1
