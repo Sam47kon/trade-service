@@ -66,7 +66,9 @@ public class OrderServiceImpl implements OrderService {
 
   @Override
   public void delete(Long id) {
-    orderRepository.findById(id).orElseThrow(() -> new OrderEntryNotFoundException(id));
+    Order order = orderRepository.findById(id)
+        .orElseThrow(() -> new OrderEntryNotFoundException(id));
+    orderLineRepository.deleteAll(order.getOrderLines());
     orderRepository.deleteById(id);
   }
 

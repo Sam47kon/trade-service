@@ -1,12 +1,11 @@
 package com.tradeservice.entities;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -23,11 +22,13 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class Order {
 
+
   public Order(String client, Date date, String address) {
     this.client = client;
     this.date = date;
     this.address = address;
   }
+
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -37,14 +38,12 @@ public class Order {
   private String client;
 
   @Column(name = "Date")
+  @JsonFormat(pattern = "yyyy-MM-dd")
   private Date date;
 
   @Column(name = "Address", nullable = false)
   private String address;
 
-  @OneToMany(fetch = FetchType.EAGER, orphanRemoval = true, mappedBy = "orderItem", cascade =
-      CascadeType.ALL)
+  @OneToMany(mappedBy = "orderItem",orphanRemoval = true)
   private Set<OrderLine> orderLines = new HashSet<>();
 }
-
-
