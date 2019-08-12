@@ -1,0 +1,21 @@
+<p>product-list works!</p>
+<div class="card my-5">
+  <div class="card-body">
+    <table class="table table-bordered table-striped">
+      <thead class="thead-dark">
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Имя товара</th>
+        <th scope="col">Цена</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="Товары">
+        <td>{{ product.getProductId }}</td>
+        <td>{{ product.getName }}</td>
+        <td>{{ product.getPrice }}</td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

@@ -1,7 +1,7 @@
 package com.tradeservice.aop;
 
-import com.tradeservice.ecxeptions.GoodsNotFoundException;
-import com.tradeservice.ecxeptions.OrderEntryNotFoundException;
+import com.tradeservice.ecxeptions.OrderNotFoundException;
+import com.tradeservice.ecxeptions.ProductNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -12,16 +12,16 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 public class NotFoundAdvice {
 
   @ResponseBody
-  @ExceptionHandler(GoodsNotFoundException.class)
+  @ExceptionHandler(ProductNotFoundException.class)
   @ResponseStatus(HttpStatus.NOT_FOUND)
-  String goodsNotFoundHandler(GoodsNotFoundException ex) {
+  String goodsNotFoundHandler(ProductNotFoundException ex) {
     return ex.getMessage();
   }
 
   @ResponseBody
-  @ExceptionHandler(OrderEntryNotFoundException.class)
+  @ExceptionHandler(OrderNotFoundException.class)
   @ResponseStatus(HttpStatus.NOT_FOUND)
-  String orderEntryNotFoundHandler(OrderEntryNotFoundException ex) {
+  String orderEntryNotFoundHandler(OrderNotFoundException ex) {
     return ex.getMessage();
   }
 }
