@@ -35,7 +35,7 @@
 
 1. Inrelij IDEA -> Settings -> Build, Execution, Deployment -> Compiler -> Annotation Processors -> ***Enabled Annotation Processing***
 2. Inrelij IDEA -> Settings -> Plugins -> ***Lomboc*** *Установить*
-3. Запуск проекта: com/tradeservice/Main
+3. Запуск проекта: Gradle -> Tasks -> application -> bootRun
 4. API Calls -> [Примеры запросов к REST API](https://documenter.getpostman.com/view/8128788/SVYusHqh) (Необходим PostMan)
 
 
