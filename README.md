@@ -44,4 +44,6 @@
 Запуск UI: 
 
     cd webapp/angular-app
-    ng serve --open
+    npm i @angular/cli      // добавить node_modules\.bin в PATH
+    npm i @bootstrap --save
+    ng serve -o --base-href /trade-service/

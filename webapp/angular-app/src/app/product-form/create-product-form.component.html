@@ -1,19 +1,18 @@
-<p>product-form works!</p>
+<p>Добавление товара</p>
 <div class="card my-5">
   <div class="card-body">
     <form (ngSubmit)="onSubmit()" #productForm="ngForm">
       <div class="form-group">
-        <label for="name">Name</label>
-        <input type="text" [(ngModel)]="product.name"
-               class="form-control" id="name" name="name" placeholder="Введите название товара"
-               required #name="ngModel">
+        <label for="name">Название товара</label>
+        <input type="text" [(ngModel)]="product.name" class="form-control" id="name" name="name"
+               placeholder="Введите название товара" required #name="ngModel">
       </div>
       <div [hidden]="!name.pristine" class="alert alert-danger">Нужно ввести название!</div>
       <div class="form-group">
         <label for="price">Price</label>
         <input type="text" [(ngModel)]="product.price"
-               class="form-control" id="price" name="price" placeholder="Укажите стоимость товара"
-               required #price="ngModel">
+               class="form-control" id="price" name="price" placeholder="Укажите стоимость товара" required
+               #price="ngModel">
         <div [hidden]="!price.pristine" class="alert alert-danger">Нужно ввести цену</div>
       </div>
       <button type="submit" [disabled]="!productForm.form.valid" class="btn btn-info">Submit</button>

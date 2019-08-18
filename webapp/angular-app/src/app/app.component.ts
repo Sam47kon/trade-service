@@ -1,4 +1,6 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
+
+import {HttpClient} from '@angular/common/http';
 
 @Component({
   selector: 'app-root',
@@ -6,9 +8,9 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-title: string;
+  title: string;
 
-constructor() {
-    this.title = 'Spring Boot - Angular Application';
+  constructor(private http: HttpClient) {
+    this.title = 'Trade Service';
   }
 }

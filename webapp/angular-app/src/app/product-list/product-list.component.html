@@ -1,4 +1,5 @@
-<p>product-list works!</p>
+<!--<div class="" <p>Все товары</p>-->
+
 <div class="card my-5">
   <div class="card-body">
     <table class="table table-bordered table-striped">
@@ -10,10 +11,16 @@
       </tr>
       </thead>
       <tbody>
-      <tr *ngFor="Товары">
-        <td>{{ product.getProductId }}</td>
-        <td>{{ product.getName }}</td>
-        <td>{{ product.getPrice }}</td>
+      <tr *ngFor="let product of products ">
+        <td>{{ product.productId }}</td>
+        <td>{{ product.name }}</td>
+        <td>{{ product.price }}</td>
+        <td>
+<!--          <button type="button" (click)=""-->
+        </td>
+        <td>
+          <button class="btn btn-danger" (click)="deleteProduct(product.productId)">Удалить</button>
+        </td>
       </tr>
       </tbody>
     </table>
