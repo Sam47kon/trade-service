@@ -1,0 +1,75 @@
+<p>Добавление заказа</p>
+
+<div class="card my-5">
+  <div class="card-body">
+    <form (ngSubmit)="onSubmit()" #orderForm="ngForm">
+
+      <div class="form-group">
+        <label for="clientName">ФИО</label>
+        <input type="text" [(ngModel)]="order.clientName" class="form-control" id="clientName" name="clientName"
+               placeholder="Антонов Антон Антонович" required #clientName="ngModel">
+      </div>
+      <div [hidden]="!clientName.pristine" class="alert alert-danger">Заполните поле</div>
+
+      <div class="form-group">
+        <label for="date">Дата</label>
+        <input type="date" [(ngModel)]="order.date" class="form-control" id="date" name="date"
+               placeholder="2020-01-18" required #date="ngModel">
+      </div>
+      <div [hidden]="!date.pristine" class="alert alert-danger">Выберите дату</div>
+
+      <div class="form-group">
+        <label for="address">Адрес доставки</label>
+        <input type="text" [(ngModel)]="order.address" class="form-control" id="address" name="address"
+               placeholder="Ростов-на-Дону, пр. Королева 15/1" required #address="ngModel">
+      </div>
+      <div [hidden]="!address.pristine" class="alert alert-danger">Укажите адрес</div>
+
+
+      <div class="form-group">
+        <h3>Выберите товары</h3>
+        <table class="table table-bordered table-striped">
+          <thead class="thead-dark">
+          <tr>
+            <th scope="col">Имя товара</th>
+            <th scope="col">Стоимость</th>
+            <th scope="col">Колличество</th>
+            <th scope="col">Добавить</th>
+          </tr>
+          </thead>
+          <tbody>
+<!--          TODO-->
+<!--          <tr *ngFor="let orderItem of order.orderItems; let i = index;">-->
+<!--            <td>{{ orderItem }}</td> -->
+<!--          </tr>-->
+
+            <!--            <td>{{ product.price }}</td>-->
+
+            <!--          <tr *ngFor="let product of products; let i = index;">-->
+            <!--            {{order.orderItems}}-->
+            <!--            <td>{{ product.name }}</td>-->
+            <!--            <td>{{ product.price }}</td>-->
+            <!--            <td>-->
+            <!--              <label for="count"></label>-->
+            <!--              <input type="text" [(ngModel)]="order.orderItems[i].count" class="form-control"-->
+            <!--                     id="count" name="count" required #count="ngModel">-->
+            <!--              <div [hidden]="!count.pristine" class="alert alert-danger">Укажите количество</div>-->
+            <!--            </td>-->
+            <!--            <td>-->
+            <!--              <label for="choice"></label>-->
+            <!--              <input type="checkbox" [(ngModel)]="order.orderItems[0].product" class="form-control"-->
+            <!--                     id="choice" name="choice" required #choice="ngModel">-->
+            <!--            </td>-->
+            <!--          </tr>-->
+
+          </tbody>
+        </table>
+      </div>
+
+
+      <button type="submit" [disabled]="!orderForm.form.valid" class="btn btn-info">Submit</button>
+
+    </form>
+  </div>
+</div>
+Angular generated form model (json): {{orderForm.value | json}}

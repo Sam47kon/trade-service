@@ -1,0 +1,43 @@
+<div class="card my-5">
+  <div class="card-body">
+    <table class="table table-bordered table-striped">
+      <thead class="thead-dark">
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Имя клиента</th>
+        <th scope="col">Дата</th>
+        <th scope="col">Адрес</th>
+        <th scope="col">Заказ</th>
+        <!--        <th scope="col"></th>-->
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let order of orders ">
+        <td>{{ order.orderId }}</td>
+        <td>{{ order.clientName }}</td>
+        <td>{{ order.date }}</td>
+        <td>{{ order.address }}</td>
+        <td>
+          <table class="table table-bordered table-striped">
+            <thead class="thead-dark">
+            <tr>
+              <th scope="col">Имя товара</th>
+              <th scope="col">Количество</th>
+            </tr>
+            </thead>
+            <tr *ngFor="let orderLine of order.orderItems">
+              <td>{{ orderLine.product.name }}</td>
+              <td>{{ orderLine.count }}</td>
+            </tr>
+          </table>
+        <td>
+          <button class="btn-info" (click)="updateOrder(order.orderId, order)">Изменить заказ</button>
+        </td>
+        <td>
+          <button class="btn btn-danger" (click)="deleteOrder(order.orderId)">Удалить</button>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

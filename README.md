@@ -44,6 +44,5 @@
 Запуск UI: 
 
     cd webapp/angular-app
-    npm i @angular/cli      // добавить node_modules\.bin в PATH
-    npm i @bootstrap --save
+    npm-cli.js i --scripts-prepend-node-path=auto
     ng serve -o --base-href /trade-service/

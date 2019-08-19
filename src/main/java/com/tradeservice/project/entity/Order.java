@@ -15,6 +15,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -50,7 +54,7 @@ public class Order {
   private String clientName;
 
   @Column(name = "date")
-//  @JsonFormat(pattern = "yyyy-MM-dd")
+//  @JsonFormat(pattern = "yyyy-MM-dd") // TODO  JsonDeserialize???
   private LocalDateTime date;
 
   @Column(name = "address", nullable = false)
@@ -68,10 +72,4 @@ public class Order {
     orderItem.setParentOrder(this);
     this.orderItems.add(orderItem);
   }
-
-//  @JsonDeserialize
-//  private Order linkOrderItems(){
-//    orderItems.forEach(orderItem->orderItem.setParentOrder(this));
-//    return this;
-//  }
 }

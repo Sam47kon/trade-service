@@ -1,8 +1,8 @@
 import {Component} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 
-import {Product} from '../model/product';
-import {ProductService} from '../service/product.service';
+import {Product} from '../../model/product';
+import {ProductService} from '../../service/product.service';
 
 @Component({
   selector: 'app-product-form',
@@ -10,7 +10,6 @@ import {ProductService} from '../service/product.service';
   styleUrls: ['./product-form.component.css']
 })
 export class CreateProductFormComponent {
-
   product: Product;
 
   constructor(private route: ActivatedRoute, private router: Router, private productService: ProductService) {
@@ -21,7 +20,7 @@ export class CreateProductFormComponent {
     this.productService.addProduct(this.product).subscribe(result => this.gotoProductList());
   }
 
-  public gotoProductList() {
+  private gotoProductList() {
     this.router.navigate(['/products']);
   }
 

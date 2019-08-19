@@ -6,15 +6,20 @@ import {FormsModule} from '@angular/forms';
 import {HttpClientModule} from '@angular/common/http';
 import {AppComponent} from './app.component';
 
-import {ProductListComponent} from './product-list/product-list.component';
-import {CreateProductFormComponent} from './product-form/create-product-form.component';
 import {ProductService} from './service/product.service';
+import {OrderService} from './service/order.service';
+import {ProductListComponent} from './list/product-list/product-list.component';
+import {OrderListComponent} from './list/order-list/order-list.component';
+import {CreateProductFormComponent} from './forms/product-form/create-product-form.component';
+import {CreateOrderFormComponent} from './forms/order-form/create-order-form.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     ProductListComponent,
+    OrderListComponent,
     CreateProductFormComponent,
+    CreateOrderFormComponent
   ],
   imports: [
     BrowserModule,
@@ -22,7 +27,7 @@ import {ProductService} from './service/product.service';
     HttpClientModule,
     FormsModule
   ],
-  providers: [ProductService],
+  providers: [ProductService, OrderService],
   bootstrap: [AppComponent]
 })
 export class AppModule {

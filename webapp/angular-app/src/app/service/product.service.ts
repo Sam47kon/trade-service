@@ -4,13 +4,11 @@ import {HttpClient, HttpErrorResponse, HttpHeaders} from '@angular/common/http';
 import {Product} from '../model/product';
 import {Observable} from 'rxjs/Observable';
 import {catchError} from 'rxjs/operators';
-import {ErrorObservable} from 'rxjs-compat/observable/ErrorObservable';
 import {throwError} from 'rxjs';
 
 
 @Injectable()
 export class ProductService {
-
   private readonly productsUrl: string;
 
   constructor(private http: HttpClient) {
