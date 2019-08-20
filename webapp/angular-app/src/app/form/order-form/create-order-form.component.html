@@ -1,0 +1,91 @@
+<div class="card-header">
+  <h2>Добавление заказа</h2>
+</div>
+
+<div class="card my-5">
+  <div class="card-body">
+    <form (ngSubmit)="onSubmit()" #orderForm="ngForm">
+
+      <div class="form-group col-md-5">
+        <label for="clientName">ФИО</label>
+        <input type="text" [(ngModel)]="order.clientName" class="form-control" id="clientName" name="clientName"
+               placeholder="Антонов Антон Антонович" required #clientName="ngModel">
+        <div [hidden]="!clientName.invalid || clientName.untouched" class="alert alert-danger">Заполните поле</div>
+      </div>
+
+      <div class="form-group col-md-5">
+        <label for="date">Дата</label>
+        <input type="date" [(ngModel)]="order.date" class="form-control" id="date" name="date"
+               placeholder="2020-01-18" required #date="ngModel" min="2019-01-01">
+        <div [hidden]="!date.invalid || date.untouched" class="alert alert-danger">Выберите дату</div>
+      </div>
+
+      <div class="form-group col-md-5">
+        <label for="address">Адрес доставки</label>
+        <input type="text" [(ngModel)]="order.address" class="form-control" id="address" name="address"
+               placeholder="Ростов-на-Дону, пр. Королева 15/1" required #address="ngModel">
+        <div [hidden]="!address.invalid || address.untouched" class="alert alert-danger">Укажите адрес</div>
+      </div>
+
+      <div class="form-group">
+        <h3 style="text-align: center">Выберите товары:</h3>
+        <table class="table table-bordered table-striped">
+          <thead class="thead-dark">
+          <tr style="text-align: center">
+            <th scope="col" style="width: 50%">Имя товара</th>
+            <th scope="col">Стоимость</th>
+            <th scope="col">Колличество</th>
+            <th scope="col">Добавлено</th>
+            <th scope="col">Добавить</th>
+            <th scope="col"></th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let product of products; let i = index;">
+            <td>{{ product.name }}</td>
+            <td>{{ product.price }}</td>
+            <td>
+              <label for="count"></label>
+              <input type="number" [(ngModel)]="countProduct[i]" class="form-control"
+                     id="count" name="count" #count="ngModel" min="1" max="999">
+            </td>
+            <td style="text-align: center">
+              <p *ngIf="orderItemsMap.get(product) != null">{{orderItemsMap.get(product)}}</p>
+            </td>
+            <td style="text-align: center">
+              <button type="button" class="btn btn-info" (click)="addProductToOrder(product, count.value)">
+                Добавить
+              </button>
+            </td>
+            <td style="text-align: center">
+              <button [disabled]="orderItemsMap.get(product) == null" type="button" class="btn btn-danger"
+                      (click)="deleteProductWithOrder(product)">
+                Отмена
+              </button>
+            </td>
+          </tr>
+          <tr [hidden]="orderItemsMap.size == 0">
+            <td><b>Итого</b></td>
+            <td><b>{{getTotal()}} руб.</b></td>
+            <td><b>{{getQuantity()}} штук</b></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+      <div style="text-align: center">
+        <div style="text-align: left">
+          <input type="reset" value="Очистить форму" (click)="orderItemsMap.clear()">
+        </div>
+        <div style="text-align: right">
+          <button style="width: 20%" type="submit" [disabled]="!orderForm.form.valid || orderItemsMap.size == 0"
+                  class="btn btn-info">
+            Отправить
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

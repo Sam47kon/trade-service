@@ -11,4 +11,4 @@ pluginManagement {
 		}
 	}
 }
-rootProject.name = 'project'
+rootProject.name = 'trade-service'

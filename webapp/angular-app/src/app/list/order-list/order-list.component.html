@@ -2,13 +2,14 @@
   <div class="card-body">
     <table class="table table-bordered table-striped">
       <thead class="thead-dark">
-      <tr>
+      <tr style="text-align: center">
         <th scope="col">#</th>
         <th scope="col">Имя клиента</th>
         <th scope="col">Дата</th>
         <th scope="col">Адрес</th>
-        <th scope="col">Заказ</th>
-        <!--        <th scope="col"></th>-->
+        <th scope="col" style="width: 35%">Заказ</th>
+        <th scope="col"></th>
+        <th scope="col"></th>
       </tr>
       </thead>
       <tbody>
@@ -26,12 +27,12 @@
             </tr>
             </thead>
             <tr *ngFor="let orderLine of order.orderItems">
-              <td>{{ orderLine.product.name }}</td>
+              <td style="width: 80%">{{ orderLine.product.name }}</td>
               <td>{{ orderLine.count }}</td>
             </tr>
           </table>
         <td>
-          <button class="btn-info" (click)="updateOrder(order.orderId, order)">Изменить заказ</button>
+          <button class="btn btn-info" (click)="updateOrder(order.orderId, order)">Изменить заказ</button>
         </td>
         <td>
           <button class="btn btn-danger" (click)="deleteOrder(order.orderId)">Удалить</button>

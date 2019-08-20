@@ -1,27 +1,16 @@
 package com.tradeservice.project.entity;
 
-import static javax.persistence.CascadeType.MERGE;
-import static javax.persistence.CascadeType.PERSIST;
-import static javax.persistence.CascadeType.REFRESH;
-
-import java.time.LocalDateTime;
-import java.util.Collection;
-import java.util.HashSet;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import javax.persistence.*;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.Collection;
+import java.util.HashSet;
+
+import static javax.persistence.CascadeType.*;
 
 @Data
 @Entity
@@ -31,13 +20,13 @@ import lombok.NoArgsConstructor;
 public class Order {
 
 
-  public Order(String clientName, LocalDateTime date, String address) {
+  public Order(String clientName, LocalDate date, String address) {
     this.clientName = clientName;
     this.date = date;
     this.address = address;
   }
 
-  public Order(String clientName, LocalDateTime date, String address,
+  public Order(String clientName, LocalDate date, String address,
       Collection<OrderItem> orderItems) {
     this.clientName = clientName;
     this.date = date;
@@ -54,8 +43,9 @@ public class Order {
   private String clientName;
 
   @Column(name = "date")
+//  @DateTimeFormat(iso = DateTimeFormat.ISO.DATE, pattern = "yyyy-MM-dd")
 //  @JsonFormat(pattern = "yyyy-MM-dd") // TODO  JsonDeserialize???
-  private LocalDateTime date;
+  private LocalDate date;
 
   @Column(name = "address", nullable = false)
   private String address;

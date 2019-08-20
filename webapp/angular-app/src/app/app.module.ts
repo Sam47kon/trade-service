@@ -10,8 +10,8 @@ import {ProductService} from './service/product.service';
 import {OrderService} from './service/order.service';
 import {ProductListComponent} from './list/product-list/product-list.component';
 import {OrderListComponent} from './list/order-list/order-list.component';
-import {CreateProductFormComponent} from './forms/product-form/create-product-form.component';
-import {CreateOrderFormComponent} from './forms/order-form/create-order-form.component';
+import {CreateProductFormComponent} from './form/product-form/create-product-form.component';
+import {CreateOrderFormComponent} from './form/order-form/create-order-form.component';
 
 @NgModule({
   declarations: [

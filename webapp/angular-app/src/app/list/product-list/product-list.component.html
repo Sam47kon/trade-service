@@ -6,8 +6,10 @@
       <thead class="thead-dark">
       <tr>
         <th scope="col">#</th>
-        <th scope="col">Имя товара</th>
+        <th scope="col" style="width: 70%">Имя товара</th>
         <th scope="col">Цена</th>
+        <th scope="col"></th>
+        <th scope="col"></th>
       </tr>
       </thead>
       <tbody>
@@ -16,7 +18,7 @@
         <td>{{ product.name }}</td>
         <td>{{ product.price }}</td>
         <td>
-<!--          <button type="button" (click)=""-->
+          <button type="button" class="btn btn-info" (click)="updateProduct(product.productId)">Изменить</button>
         </td>
         <td>
           <button class="btn btn-danger" (click)="deleteProduct(product.productId)">Удалить</button>

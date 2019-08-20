@@ -9,7 +9,7 @@ export class OrderService {
   private readonly orderUrl: string;
 
   constructor(private http: HttpClient) {
-    this.orderUrl = 'http://localhost:8080/orders';
+    this.orderUrl = 'http://localhost:8080/trade-service/orders';
   }
 
   private static handleError(error: HttpErrorResponse) {

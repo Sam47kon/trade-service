@@ -23,8 +23,4 @@ export class CreateProductFormComponent {
   private gotoProductList() {
     this.router.navigate(['/products']);
   }
-
-  updateProduct(id) {
-
-  }
 }
