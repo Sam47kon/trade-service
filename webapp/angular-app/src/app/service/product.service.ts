@@ -12,6 +12,7 @@ export class ProductService {
   private readonly productsUrl: string;
 
   constructor(private http: HttpClient) {
+    // this.productsUrl = 'http://localhost:8080/products';
     this.productsUrl = 'http://localhost:8080/trade-service/products';
   }
 

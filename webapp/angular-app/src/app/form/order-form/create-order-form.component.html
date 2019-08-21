@@ -1,7 +1,9 @@
+<html lang="ru">
+<body>
 <div class="card-header">
   <h2>Добавление заказа</h2>
 </div>
-
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
 <div class="card my-5">
   <div class="card-body">
     <form (ngSubmit)="onSubmit()" #orderForm="ngForm">
@@ -29,9 +31,15 @@
 
       <div class="form-group">
         <h3 style="text-align: center">Выберите товары:</h3>
-        <table class="table table-bordered table-striped">
+
+        <div class="form-group">
+          <label for="search"></label>
+          <input type="text" class="form-control" style="width:20%" id="search" placeholder="Поиск по таблице">
+        </div>
+
+        <table class="table table-bordered table-striped" id="myTable">
           <thead class="thead-dark">
-          <tr style="text-align: center">
+          <tr style="text-align: center" role="row">
             <th scope="col" style="width: 50%">Имя товара</th>
             <th scope="col">Стоимость</th>
             <th scope="col">Колличество</th>
@@ -89,3 +97,20 @@
     </form>
   </div>
 </div>
+<script>
+
+    $(document).ready(function () {
+        $("#search").keyup(function () {
+            _this = this;
+            $.each($("#myTable tbody tr"), function () {
+                if ($(this).text().toLowerCase().indexOf($(_this).val().toLowerCase()) === -1)
+                    $(this).hide();
+                else
+                    $(this).show();
+            });
+        });
+    });
+
+</script>
+</body>
+</html>

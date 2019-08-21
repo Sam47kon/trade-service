@@ -9,8 +9,10 @@ import {HttpClient} from '@angular/common/http';
 })
 export class AppComponent {
   title: string;
+  urlGitHub: string;
 
   constructor(private http: HttpClient) {
     this.title = 'Trade Service';
+    this.urlGitHub = 'https://github.com/Sam47kon/Project-for-21-Century';
   }
 }

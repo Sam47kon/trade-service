@@ -14,7 +14,7 @@
       </thead>
       <tbody>
       <tr *ngFor="let order of orders ">
-        <td>{{ order.orderId }}</td>
+        <td class="pointer-cursor" (click)="orderDetails(order.orderId)">{{ order.orderId }}</td>
         <td>{{ order.clientName }}</td>
         <td>{{ order.date }}</td>
         <td>{{ order.address }}</td>

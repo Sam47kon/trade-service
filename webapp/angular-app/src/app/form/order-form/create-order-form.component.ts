@@ -1,10 +1,11 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {Order} from '../../model/order';
 import {ActivatedRoute, Router} from '@angular/router';
 import {OrderService} from '../../service/order.service';
 import {ProductService} from '../../service/product.service';
 import {Product} from '../../model/product';
 import {OrderItem} from '../../model/order-item';
+import {NgForm} from '@angular/forms';
 
 @Component({
   selector: 'app-order-form',
@@ -12,6 +13,7 @@ import {OrderItem} from '../../model/order-item';
   styleUrls: ['./order-form.component.css']
 })
 export class CreateOrderFormComponent implements OnInit {
+  @ViewChild('orderForm', {static: false}) public createOrderForm: NgForm;
   order: Order;
   products: Product[];
   countProduct: number[] = [];

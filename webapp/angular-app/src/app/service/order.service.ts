@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {HttpClient, HttpErrorResponse, HttpHeaders} from '@angular/common/http';
+import {HttpClient, HttpErrorResponse, HttpHeaders, HttpParams} from '@angular/common/http';
 import {Observable, throwError} from 'rxjs';
 import {Order} from '../model/order';
 import {catchError} from 'rxjs/operators';
@@ -9,6 +9,7 @@ export class OrderService {
   private readonly orderUrl: string;
 
   constructor(private http: HttpClient) {
+    // this.orderUrl = 'http://localhost:8080/orders';
     this.orderUrl = 'http://localhost:8080/trade-service/orders';
   }
 
@@ -36,10 +37,15 @@ export class OrderService {
       .pipe(catchError(OrderService.handleError));
   }
 
-  addOrder(order: Order): Observable<Order> {
+  public addOrder(order: Order): Observable<Order> {
     return this.http.post<Order>(this.orderUrl + '/', order, {
       headers: new HttpHeaders({'Content-Type': 'application/json'})
     })
+      .pipe(catchError(OrderService.handleError));
+  }
+
+  public getOrderById(orderId: number): Observable<Order> {
+    return this.http.get<Order>(`${this.orderUrl}/${orderId}`)
       .pipe(catchError(OrderService.handleError));
   }
 }

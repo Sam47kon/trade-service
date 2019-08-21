@@ -1,0 +1,36 @@
+<div class="row">
+  <div class="col-md-12">
+    <div class="card-body">
+      <table class="table table-bordered table-striped">
+        <thead class="thead-dark">
+        <tr>
+          <th scope="col">Имя Клиента:</th>
+          <th scope="col">Адрес доставки:</th>
+          <th scope="col">Дата:</th>
+        </tr>
+        </thead>
+        <tr>
+          <td>{{order.clientName}}</td>
+          <td>{{order.address}}</td>
+          <td>{{order.date}}</td>
+        </tr>
+      </table>
+    </div>
+
+    <div class="card-body">
+      <table class="table table-bordered table-striped">
+        <thead class="thead-dark">
+        <tr>
+          <th scope="col">Имя товара</th>
+          <th scope="col">Количество</th>
+        </tr>
+        </thead>
+        <tr *ngFor="let orderLine of order.orderItems">
+          <td style="width: 80%">{{ orderLine.product.name }}</td>
+          <td>{{ orderLine.count }}</td>
+        </tr>
+      </table>
+    </div>
+  </div>
+</div>
+<button class="btn btn-info" (click)="goBack()">Вернуться к заказам</button>
