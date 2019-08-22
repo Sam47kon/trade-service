@@ -41,7 +41,7 @@ export class CreateOrderFormComponent implements OnInit {
       this.order.orderItems[index].product.productId = item[0].productId;
       this.order.orderItems[index++].count = item[1];
     }
-    this.orderService.addOrder(this.order).subscribe(result => this.goToOrderList());
+    this.orderService.addOrder(this.order).subscribe(() => this.goToOrderList());
   }
 
   private goToOrderList() {
