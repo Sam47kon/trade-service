@@ -7,7 +7,7 @@ import {Injectable} from '@angular/core';
 })
 export class CreateProductCanDeactivateGuardService implements CanDeactivate<CreateProductFormComponent> {
   canDeactivate(component: CreateProductFormComponent): boolean {
-    if (component.createProductForm.dirty) {
+    if (component.createProductForm.dirty && !component.createProductForm.submitted) {
       return confirm('Вы уверены что хотите покинуть страницу, не заполнив данные?');
     }
     return true;

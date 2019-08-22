@@ -17,6 +17,7 @@ export class CreateOrderFormComponent implements OnInit {
   order: Order;
   products: Product[];
   countProduct: number[] = [];
+  searchTerm: string;
 
   orderItemsMap: Map<Product, number> = new Map<Product, number>();
 

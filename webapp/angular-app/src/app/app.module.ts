@@ -14,7 +14,8 @@ import {CreateProductFormComponent} from './form/product-form/create-product-for
 import {CreateOrderFormComponent} from './form/order-form/create-order-form.component';
 import {CreateProductCanDeactivateGuardService} from './form/product-form/create-product-can-deactivate-guard.service';
 import {CreateOrderCanDeactivateGuardService} from './form/order-form/create-order-can-deactivate-guard.service';
-import { OrderDetailsComponent } from './display/order-details/order-details.component';
+import {OrderDetailsComponent} from './display/order-details/order-details.component';
+import {ProductFilterPipe} from './pipe/product-filter.pipe';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { OrderDetailsComponent } from './display/order-details/order-details.com
     OrderListComponent,
     CreateProductFormComponent,
     CreateOrderFormComponent,
-    OrderDetailsComponent
+    OrderDetailsComponent,
+    ProductFilterPipe
   ],
   imports: [
     BrowserModule,
