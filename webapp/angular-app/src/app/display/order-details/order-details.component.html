@@ -9,7 +9,7 @@
           <th scope="col">Дата:</th>
         </tr>
         </thead>
-        <tr>
+        <tr *ngIf="order">
           <td>{{order.clientName}}</td>
           <td>{{order.address}}</td>
           <td>{{order.date}}</td>
@@ -25,9 +25,9 @@
           <th scope="col">Количество</th>
         </tr>
         </thead>
-        <tr *ngFor="let orderLine of order.orderItems">
-          <td style="width: 80%">{{ orderLine.product.name }}</td>
-          <td>{{ orderLine.count }}</td>
+        <tr *ngFor="let orderItem of orderItems">
+          <td style="width: 80%">{{ orderItem.product.name }}</td>
+          <td>{{ orderItem.count }}</td>
         </tr>
       </table>
     </div>

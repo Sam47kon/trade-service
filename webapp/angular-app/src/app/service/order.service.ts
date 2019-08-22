@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {HttpClient, HttpErrorResponse, HttpHeaders, HttpParams} from '@angular/common/http';
+import {HttpClient, HttpErrorResponse, HttpHeaders} from '@angular/common/http';
 import {Observable, throwError} from 'rxjs';
 import {Order} from '../model/order';
 import {catchError} from 'rxjs/operators';
@@ -24,7 +24,8 @@ export class OrderService {
 
   public findAll(): Observable<Order[]> {
     return this.http.get<Order[]>(this.orderUrl)
-      .pipe(catchError(OrderService.handleError));
+      .pipe(catchError(OrderService.handleError))
+      .delay(300);
   }
 
   public deleteOrder(id: number) {

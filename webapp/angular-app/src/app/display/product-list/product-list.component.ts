@@ -12,19 +12,19 @@ export class ProductListComponent implements OnInit {
   products: Product[];
 
   constructor(private route: ActivatedRoute, private router: Router, private productService: ProductService) {
+    this.products = this.route.snapshot.data.productList;
   }
 
   ngOnInit() {
-    this.productService.findAll().subscribe(data => {
-      this.products = data;
-    });
   }
 
   public deleteProduct(id): void {
-    this.productService.deleteProduct(id).subscribe(result => this.ngOnInit());
+    this.productService.deleteProduct(id).subscribe(
+      () => this.productService.findAll()
+        .subscribe(data => this.products = data));
   }
 
   public updateProduct(id): void {
-    this.router.navigate(['/']);  // TODO
+    this.router.navigate(['/']);
   }
 }

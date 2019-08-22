@@ -5,6 +5,7 @@ import {Product} from '../model/product';
 import {Observable} from 'rxjs/Observable';
 import {catchError} from 'rxjs/operators';
 import {throwError} from 'rxjs';
+import 'rxjs-compat/add/operator/delay';
 
 
 @Injectable()
@@ -27,7 +28,8 @@ export class ProductService {
 
   public findAll(): Observable<Product[]> {
     return this.http.get<Product[]>(this.productsUrl)
-      .pipe(catchError(ProductService.handleError));
+      .pipe(catchError(ProductService.handleError))
+      .delay(300);
   }
 
   public addProduct(product): Observable<Product> {
