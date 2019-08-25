@@ -5,9 +5,9 @@ export class OrderDetailGuardService implements CanActivate {
   constructor(private orderService: OrderService, private router: Router) {
   }
 
-  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
+  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean { // TODO
     const order = this.orderService.getOrderById(+route.paramMap.get('id')).subscribe(value => {
-      if (value) {
+      if (value.orderId) {
         return value;
       } else {
         return null;

@@ -24,8 +24,8 @@ export class OrderListComponent implements OnInit {
     this.orderService.deleteOrder(id).subscribe(result => this.ngOnInit());
   }
 
-  public updateOrder(id: number, order: Order): void { // TODO
-    this.orderService.updateOrder(id, order).subscribe(result => this.ngOnInit());
+  public updateOrder(id: number): void {
+    this.router.navigate(['orders/edit', id]);
   }
 
   orderDetails(orderId: number) {

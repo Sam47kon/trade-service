@@ -18,7 +18,9 @@
         <td>{{ product.name }}</td>
         <td>{{ product.price }}</td>
         <td>
-          <button type="button" class="btn btn-info" (click)="updateProduct(product.productId)">Изменить</button>
+          <button (click)="editProduct(product.productId)" class="btn btn-info" type="button">
+            Изменить
+          </button>
         </td>
         <td>
           <button class="btn btn-danger" (click)="deleteProduct(product.productId)">Удалить</button>

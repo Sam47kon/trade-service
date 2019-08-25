@@ -10,10 +10,10 @@ import {ProductService} from './service/product.service';
 import {OrderService} from './service/order.service';
 import {ProductListComponent} from './display/product-list/product-list.component';
 import {OrderListComponent} from './display/order-list/order-list.component';
-import {CreateProductFormComponent} from './form/product-form/create-product-form.component';
-import {CreateOrderFormComponent} from './form/order-form/create-order-form.component';
-import {CreateProductCanDeactivateGuardService} from './form/product-form/create-product-can-deactivate-guard.service';
-import {CreateOrderCanDeactivateGuardService} from './form/order-form/create-order-can-deactivate-guard.service';
+import {ProductFormComponent} from './form/product-form/product-form.component';
+import {OrderFormComponent} from './form/order-form/order-form.component';
+import {ProductFormCanDeactivateGuardService} from './form/product-form/product-form-can-deactivate-guard.service';
+import {OrderFormCanDeactivateGuardService} from './form/order-form/order-form-can-deactivate-guard.service';
 import {OrderDetailsComponent} from './display/order-details/order-details.component';
 import {ProductFilterPipe} from './pipe/product-filter.pipe';
 import {ProductListResolverService} from './display/product-list/product-list-resolver.service';
@@ -25,8 +25,8 @@ import {OrderDetailGuardService} from './display/order-details/order-detail-guar
     AppComponent,
     ProductListComponent,
     OrderListComponent,
-    CreateProductFormComponent,
-    CreateOrderFormComponent,
+    ProductFormComponent,
+    OrderFormComponent,
     OrderDetailsComponent,
     ProductFilterPipe,
     PageNotFoundComponent
@@ -40,8 +40,8 @@ import {OrderDetailGuardService} from './display/order-details/order-detail-guar
   providers: [
     ProductService,
     OrderService,
-    CreateProductCanDeactivateGuardService,
-    CreateOrderCanDeactivateGuardService,
+    ProductFormCanDeactivateGuardService,
+    OrderFormCanDeactivateGuardService,
     ProductListResolverService,
     OrderDetailGuardService
   ],

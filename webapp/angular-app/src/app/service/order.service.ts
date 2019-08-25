@@ -7,10 +7,13 @@ import {catchError} from 'rxjs/operators';
 @Injectable()
 export class OrderService {
   private readonly orderUrl: string;
+  headers: HttpHeaders = new HttpHeaders({
+    'Content-Type': 'application/json'
+  });
 
   constructor(private http: HttpClient) {
-    // this.orderUrl = 'http://localhost:8080/orders';
-    this.orderUrl = 'http://localhost:8080/trade-service/orders';
+    this.orderUrl = 'http://localhost:8080/orders';
+    // this.orderUrl = 'http://localhost:8080/trade-service/orders';
   }
 
   private static handleError(error: HttpErrorResponse) {
@@ -33,15 +36,15 @@ export class OrderService {
       .pipe(catchError(OrderService.handleError));
   }
 
-  public updateOrder(id: number, order: Order) {
-    return this.http.put(this.orderUrl + '/' + id, order)
+  public editOrder(id: number, order: Order): Observable<Object> {
+    return this.http.put(`${this.orderUrl}/${id}`, order,
+      {headers: this.headers})
       .pipe(catchError(OrderService.handleError));
   }
 
   public addOrder(order: Order): Observable<Order> {
-    return this.http.post<Order>(this.orderUrl + '/', order, {
-      headers: new HttpHeaders({'Content-Type': 'application/json'})
-    })
+    return this.http.post<Order>(`${this.orderUrl}/`, order,
+      {headers: this.headers})
       .pipe(catchError(OrderService.handleError));
   }
 

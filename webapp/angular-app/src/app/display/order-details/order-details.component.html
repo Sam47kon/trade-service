@@ -33,4 +33,11 @@
     </div>
   </div>
 </div>
-<button class="btn btn-info" (click)="goBack()">Вернуться к заказам</button>
+<div>
+  <button (click)="goBack()" class="btn btn-info" style="float: left">
+    Вернуться к заказам
+  </button>
+  <button (click)="editOrder()" class="btn btn-info" style="float: right">
+    Изменить заказ
+  </button>
+</div>

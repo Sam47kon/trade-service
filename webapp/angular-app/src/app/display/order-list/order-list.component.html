@@ -14,7 +14,11 @@
       </thead>
       <tbody>
       <tr *ngFor="let order of orders ">
-        <td class="pointer-cursor" (click)="orderDetails(order.orderId)">{{ order.orderId }}</td>
+        <td>
+          <button (click)="orderDetails(order.orderId)" class="btn badge-info pointer-cursor">
+            {{ order.orderId }}
+          </button>
+        </td>
         <td>{{ order.clientName }}</td>
         <td>{{ order.date }}</td>
         <td>{{ order.address }}</td>
@@ -32,7 +36,7 @@
             </tr>
           </table>
         <td>
-          <button class="btn btn-info" (click)="updateOrder(order.orderId, order)">Изменить заказ</button>
+          <button (click)="updateOrder(order.orderId)" class="btn btn-info">Изменить заказ</button>
         </td>
         <td>
           <button class="btn btn-danger" (click)="deleteOrder(order.orderId)">Удалить</button>

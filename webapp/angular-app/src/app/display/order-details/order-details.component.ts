@@ -7,9 +7,8 @@ import {OrderItem} from '../../model/order-item';
 @Component({
   selector: 'app-order-details',
   templateUrl: './order-details.component.html',
-  styleUrls: ['./order-details.component.css']
 })
-export class OrderDetailsComponent implements OnInit {
+export class OrderDetailsComponent implements OnInit {  // TODO добавить общ стоимость
   order: Order;
   orderItems: OrderItem[];
   id: number;
@@ -29,5 +28,9 @@ export class OrderDetailsComponent implements OnInit {
 
   goBack() {
     this.router.navigate(['orders']);
+  }
+
+  editOrder() {
+    this.router.navigate(['orders/edit/', this.id]);
   }
 }

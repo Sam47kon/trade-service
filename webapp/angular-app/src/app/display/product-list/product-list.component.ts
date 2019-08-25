@@ -6,7 +6,6 @@ import {ActivatedRoute, Router} from '@angular/router';
 @Component({
   selector: 'app-product-list',
   templateUrl: './product-list.component.html',
-  styleUrls: ['./product-list.component.css']
 })
 export class ProductListComponent implements OnInit {
   products: Product[];
@@ -18,13 +17,13 @@ export class ProductListComponent implements OnInit {
   ngOnInit() {
   }
 
-  public deleteProduct(id): void {
+  public deleteProduct(id: number): void {
     this.productService.deleteProduct(id).subscribe(
       () => this.productService.findAll()
-        .subscribe(data => this.products = data));
+      .subscribe(data => this.products = data));
   }
 
-  public updateProduct(id): void {
-    this.router.navigate(['/']);
+  public editProduct(id: number) {
+    this.router.navigate(['products/edit', id]);
   }
 }
