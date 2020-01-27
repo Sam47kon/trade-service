@@ -1,30 +1,8 @@
 package com.tradeservice.project.controllers;
 
-import static com.tradeservice.project.util.TestConstants.NOT_EXIST_ID;
-import static com.tradeservice.project.util.TestConstants.PRODUCT_1;
-import static com.tradeservice.project.util.TestConstants.PRODUCT_1_TO_UPDATE;
-import static com.tradeservice.project.util.TestConstants.PRODUCT_2;
-import static com.tradeservice.project.util.TestConstants.PRODUCT_LIST;
-import static org.hamcrest.Matchers.is;
-import static org.mockito.Mockito.doNothing;
-import static org.mockito.Mockito.doThrow;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.verifyNoMoreInteractions;
-import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.tradeservice.project.ecxeptions.ProductNotFoundException;
 import com.tradeservice.project.service.impl.ProductServiceImpl;
-import java.util.Optional;
 import lombok.SneakyThrows;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
@@ -36,121 +14,130 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 
+import java.util.Optional;
+
+import static com.tradeservice.project.util.TestConstants.*;
+import static org.hamcrest.Matchers.is;
+import static org.mockito.Mockito.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+
 @ExtendWith(SpringExtension.class)
 @WebMvcTest(ProductController.class)
 class ProductControllerTest {
 
-  @Autowired
-  private MockMvc mockMvc;
+    @Autowired
+    private MockMvc mockMvc;
 
-  @MockBean
-  private ProductServiceImpl productService;
+    @MockBean
+    private ProductServiceImpl productService;
 
-  @AfterEach
-  void after() {
-    verifyNoMoreInteractions(productService);
-  }
+    @SneakyThrows
+    private static String asJsonString(final Object obj) {
+        return new ObjectMapper().writeValueAsString(obj);
+    }
 
-  @Test
-  void testCreateProduct() throws Exception {
-    when(productService.add(PRODUCT_1)).thenReturn(PRODUCT_1);
+    @AfterEach
+    void after() {
+        verifyNoMoreInteractions(productService);
+    }
 
-    mockMvc.perform(post("/products").contentType(MediaType.APPLICATION_JSON)
-        .content(asJsonString(PRODUCT_1)).accept(MediaType.APPLICATION_JSON))
-        .andDo(print()).andExpect(status().isCreated())
-        .andExpect(jsonPath("$.productId").exists())
-        .andExpect(jsonPath("$.name").value(PRODUCT_1.getName()))
-        .andExpect(jsonPath("$.price").value(PRODUCT_1.getPrice()));
+    @Test
+    void testCreateProduct() throws Exception {
+        when(productService.add(PRODUCT_1)).thenReturn(PRODUCT_1);
 
-    verify(productService).add(PRODUCT_1);
-  }
+        mockMvc.perform(post("/products").contentType(MediaType.APPLICATION_JSON)
+                .content(asJsonString(PRODUCT_1)).accept(MediaType.APPLICATION_JSON))
+                .andDo(print()).andExpect(status().isCreated())
+                .andExpect(jsonPath("$.productId").exists())
+                .andExpect(jsonPath("$.name").value(PRODUCT_1.getName()))
+                .andExpect(jsonPath("$.price").value(PRODUCT_1.getPrice()));
 
-  @Test
-  void testUpdateProduct() throws Exception {
-    when(productService.update(PRODUCT_1_TO_UPDATE, PRODUCT_1.getProductId()))
-        .thenReturn(PRODUCT_1_TO_UPDATE);
+        verify(productService).add(PRODUCT_1);
+    }
 
-    mockMvc.perform(put("/products/" + PRODUCT_1.getProductId())
-        .contentType(MediaType.APPLICATION_JSON).content(asJsonString(PRODUCT_1_TO_UPDATE)))
-        .andDo(print())
-        .andExpect(status().isAccepted())
-        .andExpect(jsonPath("$.productId").value(PRODUCT_1.getProductId()))
-        .andExpect(jsonPath("$.name").value(PRODUCT_1_TO_UPDATE.getName()))
-        .andExpect(jsonPath("$.price").value(PRODUCT_1_TO_UPDATE.getPrice()));
+    @Test
+    void testUpdateProduct() throws Exception {
+        when(productService.update(PRODUCT_1_TO_UPDATE, PRODUCT_1.getProductId()))
+                .thenReturn(PRODUCT_1_TO_UPDATE);
 
-    verify(productService).update(PRODUCT_1_TO_UPDATE, PRODUCT_1.getProductId());
-  }
+        mockMvc.perform(put("/products/" + PRODUCT_1.getProductId())
+                .contentType(MediaType.APPLICATION_JSON).content(asJsonString(PRODUCT_1_TO_UPDATE)))
+                .andDo(print())
+                .andExpect(status().isAccepted())
+                .andExpect(jsonPath("$.productId").value(PRODUCT_1.getProductId()))
+                .andExpect(jsonPath("$.name").value(PRODUCT_1_TO_UPDATE.getName()))
+                .andExpect(jsonPath("$.price").value(PRODUCT_1_TO_UPDATE.getPrice()));
 
-  @Test
-  void testUpdateProduct_fail_not_found() throws Exception {
-    when(productService.update(PRODUCT_1_TO_UPDATE, NOT_EXIST_ID))
-        .thenThrow(ProductNotFoundException.class);
+        verify(productService).update(PRODUCT_1_TO_UPDATE, PRODUCT_1.getProductId());
+    }
 
-    mockMvc.perform(put("/products/999")
-        .contentType(MediaType.APPLICATION_JSON)
-        .content(asJsonString(PRODUCT_1_TO_UPDATE)))
-        .andDo(print())
-        .andExpect(status().isNotFound());
+    @Test
+    void testUpdateProduct_fail_not_found() throws Exception {
+        when(productService.update(PRODUCT_1_TO_UPDATE, NOT_EXIST_ID))
+                .thenThrow(ProductNotFoundException.class);
 
-    verify(productService).update(PRODUCT_1_TO_UPDATE, NOT_EXIST_ID);
-  }
+        mockMvc.perform(put("/products/999")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(asJsonString(PRODUCT_1_TO_UPDATE)))
+                .andDo(print())
+                .andExpect(status().isNotFound());
 
-  @Test
-  void testDeleteProduct() throws Exception {
-    doNothing().when(productService).delete(PRODUCT_1.getProductId());
-    doNothing().when(productService).delete(PRODUCT_2.getProductId());
-    doThrow(ProductNotFoundException.class).when(productService).delete(NOT_EXIST_ID);
+        verify(productService).update(PRODUCT_1_TO_UPDATE, NOT_EXIST_ID);
+    }
 
-    mockMvc.perform(delete("/products/" + PRODUCT_1.getProductId())).andDo(print())
-        .andExpect(status().isAccepted());
-    mockMvc.perform(delete("/products/" + PRODUCT_2.getProductId())).andDo(print())
-        .andExpect(status().isAccepted());
-    mockMvc.perform(delete("/products/" + NOT_EXIST_ID)).andDo(print())
-        .andExpect(status().isNotFound());
+    @Test
+    void testDeleteProduct() throws Exception {
+        doNothing().when(productService).delete(PRODUCT_1.getProductId());
+        doNothing().when(productService).delete(PRODUCT_2.getProductId());
+        doThrow(ProductNotFoundException.class).when(productService).delete(NOT_EXIST_ID);
 
-    mockMvc.perform(delete("/products/" + NOT_EXIST_ID))
-        .andExpect(status().isNotFound());
+        mockMvc.perform(delete("/products/" + PRODUCT_1.getProductId())).andDo(print())
+                .andExpect(status().isAccepted());
+        mockMvc.perform(delete("/products/" + PRODUCT_2.getProductId())).andDo(print())
+                .andExpect(status().isAccepted());
+        mockMvc.perform(delete("/products/" + NOT_EXIST_ID)).andDo(print())
+                .andExpect(status().isNotFound());
 
-    verify(productService).delete(PRODUCT_1.getProductId());
-    verify(productService).delete(PRODUCT_2.getProductId());
-    verify(productService, times(2)).delete(NOT_EXIST_ID);
-  }
+        mockMvc.perform(delete("/products/" + NOT_EXIST_ID))
+                .andExpect(status().isNotFound());
 
-  @Test
-  void testGetAllProducts() throws Exception {
-    when(productService.getAll()).thenReturn(PRODUCT_LIST);
-    mockMvc.perform(get("/products/")).andDo(print())
-        .andExpect(status().isOk())
-        .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-        .andExpect(jsonPath("$").exists())
-        .andExpect(jsonPath("$[*].productId").isNotEmpty())
-        .andExpect(jsonPath("$[*].name").isNotEmpty());
-    verify(productService).getAll();
-  }
+        verify(productService).delete(PRODUCT_1.getProductId());
+        verify(productService).delete(PRODUCT_2.getProductId());
+        verify(productService, times(2)).delete(NOT_EXIST_ID);
+    }
 
-  @Test
-  void testGetProduct() throws Exception {
-    when(productService.getById(PRODUCT_1.getProductId())).thenReturn(Optional.of(PRODUCT_1));
+    @Test
+    void testGetAllProducts() throws Exception {
+        when(productService.getAll()).thenReturn(PRODUCT_LIST);
+        mockMvc.perform(get("/products/")).andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$").exists())
+                .andExpect(jsonPath("$[*].productId").isNotEmpty())
+                .andExpect(jsonPath("$[*].name").isNotEmpty());
+        verify(productService).getAll();
+    }
 
-    mockMvc.perform(get("/products/" + PRODUCT_1.getProductId())).andDo(print())
-        .andExpect(status().isOk())
-        .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-        .andExpect(jsonPath("$.productId").value((PRODUCT_1.getProductId())))
-        .andExpect(jsonPath("$.name", is(PRODUCT_1.getName())))
-        .andExpect(jsonPath("$.price", is(PRODUCT_1.getPrice())));
+    @Test
+    void testGetProduct() throws Exception {
+        when(productService.getById(PRODUCT_1.getProductId())).thenReturn(Optional.of(PRODUCT_1));
 
-    verify(productService).getById(PRODUCT_1.getProductId());
-  }
+        mockMvc.perform(get("/products/" + PRODUCT_1.getProductId())).andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.productId").value((PRODUCT_1.getProductId())))
+                .andExpect(jsonPath("$.name", is(PRODUCT_1.getName())))
+                .andExpect(jsonPath("$.price", is(PRODUCT_1.getPrice())));
 
-  @Test
-  void testGetProduct_fail_not_found() throws Exception {
-    doThrow(ProductNotFoundException.class).when(productService).getById(NOT_EXIST_ID);
-    mockMvc.perform(get("/products/999")).andDo(print()).andExpect(status().isNotFound());
-    verify(productService).getById(NOT_EXIST_ID);
-  }
+        verify(productService).getById(PRODUCT_1.getProductId());
+    }
 
-  @SneakyThrows
-  private static String asJsonString(final Object obj) {
-    return new ObjectMapper().writeValueAsString(obj);
-  }
+    @Test
+    void testGetProduct_fail_not_found() throws Exception {
+        doThrow(ProductNotFoundException.class).when(productService).getById(NOT_EXIST_ID);
+        mockMvc.perform(get("/products/999")).andDo(print()).andExpect(status().isNotFound());
+        verify(productService).getById(NOT_EXIST_ID);
+    }
 }
