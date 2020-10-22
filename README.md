@@ -39,7 +39,6 @@
 4. API Calls -> [Примеры запросов к REST API](https://documenter.getpostman.com/view/8128788/SVYusHqh) (Необходим PostMan)
 
 
-*In process...*
 ------
 Запуск UI: 
 
