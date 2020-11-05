@@ -1,8 +1,6 @@
-Тестовое задание для "21 Век"
-==============
+<h1>Тестовое задание для "21 Век"</h1>
 
-Описание задания:
---------------
+<h2>Описание задания:</h2>
 
 <h4>1. Сделать 3 сущности «Заказ» (Order), «Строка Заказа» (OrderLine) и «Товар» (Goods) которые сохраняются в базу данных</h4>
 
@@ -30,15 +28,14 @@
 - журнала заказов и справочника товаров в двух вкладках (сделать переключения между журналами через вкладки)
 - возможность добавления, изменения, удаления и редактирования заказа и справочника товаров
 
-Запуск проекта
---------------
+<h2>Запуск проекта</h2>
 
 1. Включить обработку аннотаций:  Inrelij IDEA -> Settings -> Build, Execution, Deployment -> Compiler -> Annotation Processors -> ***Enabled Annotation Processing***
 2. Установить Lomboc плагин: Inrelij IDEA -> Settings -> Plugins -> ***Lomboc*** *Установить*
 3. Запуск проекта: Gradle -> Tasks -> application -> bootRun
 4. API Calls -> [Примеры запросов к REST API](https://documenter.getpostman.com/view/8128788/SVYusHqh) (Необходим PostMan)
 5. Запуск UI: 
-
+--------------
     cd webapp/angular-app
     npm install
     npm install -g "@angular/cli"
