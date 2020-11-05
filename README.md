@@ -33,15 +33,13 @@
 Запуск проекта
 --------------
 
-1. Inrelij IDEA -> Settings -> Build, Execution, Deployment -> Compiler -> Annotation Processors -> ***Enabled Annotation Processing***
-2. Inrelij IDEA -> Settings -> Plugins -> ***Lomboc*** *Установить*
+1. Включить обработку аннотаций:  Inrelij IDEA -> Settings -> Build, Execution, Deployment -> Compiler -> Annotation Processors -> ***Enabled Annotation Processing***
+2. Установить Lomboc плагин: Inrelij IDEA -> Settings -> Plugins -> ***Lomboc*** *Установить*
 3. Запуск проекта: Gradle -> Tasks -> application -> bootRun
 4. API Calls -> [Примеры запросов к REST API](https://documenter.getpostman.com/view/8128788/SVYusHqh) (Необходим PostMan)
-
-
-------
-Запуск UI: 
+5. Запуск UI: 
 
     cd webapp/angular-app
-    npm-cli.js i --scripts-prepend-node-path=auto
+    npm install
+    npm install -g "@angular/cli"
     ng serve -o --base-href /trade-service/
