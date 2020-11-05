@@ -20,7 +20,7 @@
       <div class="form-group col-md-5">
         <label for="date">Дата</label>
         <input #date="ngModel" [(ngModel)]="order.date" class="form-control" id="date"
-               min="2019-01-01" name="date" placeholder="2020-01-18" required type="date"/>
+               min="2019-01-01" name="date" placeholder="2020-01-18" required type="datetime-local"/>
         <div [hidden]="!date.invalid || date.untouched" class="alert alert-danger">Выберите дату
         </div>
       </div>

@@ -35,6 +35,10 @@ public class InitDbRunner {
 		return args -> {
 			log.info("Add new goods1: " + productService.add(newProduct1));
 			log.info("Add new goods2: " + productService.add(newProduct2));
+			for (int i = 3; i <= 50; i++) {
+				log.info("Add new goods" + i + ": " + productService.add(
+						new Product("Товар " + i, Math.ceil(100 * (Math.random() * i + 1)))));
+			}
 			log.info("Add new order1: " + orderService.add(newOrder1));
 			log.info("Add new order2: " + orderService.add(newOrder2));
 		};

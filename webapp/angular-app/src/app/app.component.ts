@@ -11,6 +11,6 @@ export class AppComponent {
 
   constructor() {
     this.title = 'Trade Service';
-    this.urlGitHub = 'https://github.com/Sam47kon/Project-for-21-Century';
+    this.urlGitHub = 'https://github.com/Sam47kon/trade-service';
   }
 }
