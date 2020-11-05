@@ -36,7 +36,7 @@
 4. API Calls -> [Примеры запросов к REST API](https://documenter.getpostman.com/view/8128788/SVYusHqh) (Необходим PostMan)
 5. Запуск UI: 
 
-1. `cd webapp/angular-app`
-2. `npm install`
-3. `npm install -g "@angular/cli"`
-4. `ng serve -o --base-href /trade-service/`
+- `cd webapp/angular-app`
+- `npm install`
+- `npm install -g "@angular/cli"`
+- `ng serve -o --base-href /trade-service/`
