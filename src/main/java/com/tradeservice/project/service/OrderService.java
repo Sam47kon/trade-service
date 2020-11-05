@@ -7,13 +7,13 @@ import java.util.Optional;
 
 public interface OrderService {
 
-    Order add(Order order);
+	Order add(Order order);
 
-    Order update(Order newOrder, Long id);
+	Order update(Order newOrder, Long id);
 
-    void delete(Long id);
+	void delete(Long id);
 
-    Collection<Order> getAll();
+	Collection<Order> getAll();
 
-    Optional<Order> getById(Long id);
+	Optional<Order> getById(Long id);
 }

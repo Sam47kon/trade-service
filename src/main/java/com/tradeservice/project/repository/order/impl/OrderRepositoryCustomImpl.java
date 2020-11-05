@@ -8,19 +8,19 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.persistence.EntityManager;
 
 public class OrderRepositoryCustomImpl implements OrderRepositoryCustom {
-    private final OrderRepositoryBasic orderRepositoryBasic;
-    private final EntityManager entityManager;
+	private final OrderRepositoryBasic orderRepositoryBasic;
+	private final EntityManager entityManager;
 
-    public OrderRepositoryCustomImpl(OrderRepositoryBasic orderRepositoryBasic, EntityManager entityManager1) {
-        this.orderRepositoryBasic = orderRepositoryBasic;
-        this.entityManager = entityManager1;
-    }
+	public OrderRepositoryCustomImpl(OrderRepositoryBasic orderRepositoryBasic, EntityManager entityManager1) {
+		this.orderRepositoryBasic = orderRepositoryBasic;
+		this.entityManager = entityManager1;
+	}
 
-    @Override
-    @Transactional
-    public Order saveAndRefresh(Order order) {
-        orderRepositoryBasic.save(order);
-        entityManager.refresh(order);
-        return order;
-    }
+	@Override
+	@Transactional
+	public Order saveAndRefresh(Order order) {
+		orderRepositoryBasic.save(order);
+		entityManager.refresh(order);
+		return order;
+	}
 }

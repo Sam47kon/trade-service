@@ -11,17 +11,17 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 @ControllerAdvice
 public class NotFoundAdvice {
 
-    @ResponseBody
-    @ExceptionHandler(ProductNotFoundException.class)
-    @ResponseStatus(HttpStatus.NOT_FOUND)
-    String goodsNotFoundHandler(ProductNotFoundException ex) {
-        return ex.getMessage();
-    }
+	@ResponseBody
+	@ExceptionHandler(ProductNotFoundException.class)
+	@ResponseStatus(HttpStatus.NOT_FOUND)
+	String goodsNotFoundHandler(ProductNotFoundException ex) {
+		return ex.getMessage();
+	}
 
-    @ResponseBody
-    @ExceptionHandler(OrderNotFoundException.class)
-    @ResponseStatus(HttpStatus.NOT_FOUND)
-    String orderEntryNotFoundHandler(OrderNotFoundException ex) {
-        return ex.getMessage();
-    }
+	@ResponseBody
+	@ExceptionHandler(OrderNotFoundException.class)
+	@ResponseStatus(HttpStatus.NOT_FOUND)
+	String orderEntryNotFoundHandler(OrderNotFoundException ex) {
+		return ex.getMessage();
+	}
 }

@@ -13,16 +13,16 @@ import javax.persistence.*;
 @AllArgsConstructor
 public class Product {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long productId;
-    @Column(name = "name", nullable = false, unique = true)
-    private String name;
-    @Column(name = "price", nullable = false)
-    private Double price;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long productId;
+	@Column(name = "name", nullable = false, unique = true)
+	private String name;
+	@Column(name = "price", nullable = false)
+	private Double price;
 
-    public Product(String name, Double price) {
-        this.name = name;
-        this.price = price;
-    }
+	public Product(String name, Double price) {
+		this.name = name;
+		this.price = price;
+	}
 }

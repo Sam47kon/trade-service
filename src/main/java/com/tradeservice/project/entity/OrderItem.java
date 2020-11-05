@@ -11,26 +11,26 @@ import javax.persistence.*;
 @AllArgsConstructor
 public class OrderItem {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "parent_order_ID")
-    @Getter(AccessLevel.NONE)
-    @ToString.Exclude
-    @EqualsAndHashCode.Exclude
-    private Order parentOrder;
+	@ManyToOne
+	@JoinColumn(name = "parent_order_ID")
+	@Getter(AccessLevel.NONE)
+	@ToString.Exclude
+	@EqualsAndHashCode.Exclude
+	private Order parentOrder;
 
-    @ManyToOne
-    @JoinColumn(name = "productId")
-    private Product product;
+	@ManyToOne
+	@JoinColumn(name = "productId")
+	private Product product;
 
-    @Column(name = "count")
-    private int count;
+	@Column(name = "count")
+	private int count;
 
-    public OrderItem(Product product, int count) {
-        this.product = product;
-        this.count = count;
-    }
+	public OrderItem(Product product, int count) {
+		this.product = product;
+		this.count = count;
+	}
 }

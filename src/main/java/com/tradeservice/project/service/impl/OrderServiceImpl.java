@@ -14,40 +14,40 @@ import java.util.Optional;
 @Service
 public class OrderServiceImpl implements OrderService {
 
-    private final OrderRepository orderRepository;
+	private final OrderRepository orderRepository;
 
-    @Autowired
-    public OrderServiceImpl(OrderRepository orderRepository) {
-        this.orderRepository = orderRepository;
-    }
+	@Autowired
+	public OrderServiceImpl(OrderRepository orderRepository) {
+		this.orderRepository = orderRepository;
+	}
 
-    @Override
-    @Transactional
-    public Order add(Order newOrderRequest) {
-        newOrderRequest.setOrderId(null);
-        return orderRepository.saveAndRefresh(newOrderRequest);
-    }
+	@Override
+	@Transactional
+	public Order add(Order newOrderRequest) {
+		newOrderRequest.setOrderId(null);
+		return orderRepository.saveAndRefresh(newOrderRequest);
+	}
 
-    @Override
-    public Order update(Order newOrderRequest, Long id) {
-        orderRepository.findById(id).orElseThrow(() -> new OrderNotFoundException(id));
-        newOrderRequest.setOrderId(id);
-        return orderRepository.saveAndFlush(newOrderRequest);
-    }
+	@Override
+	public Order update(Order newOrderRequest, Long id) {
+		orderRepository.findById(id).orElseThrow(() -> new OrderNotFoundException(id));
+		newOrderRequest.setOrderId(id);
+		return orderRepository.saveAndFlush(newOrderRequest);
+	}
 
-    @Override
-    public void delete(Long id) {
-        orderRepository.delete(orderRepository.findById(id)
-                .orElseThrow(() -> new OrderNotFoundException(id)));
-    }
+	@Override
+	public void delete(Long id) {
+		orderRepository.delete(orderRepository.findById(id)
+				.orElseThrow(() -> new OrderNotFoundException(id)));
+	}
 
-    @Override
-    public Collection<Order> getAll() {
-        return orderRepository.findAll();
-    }
+	@Override
+	public Collection<Order> getAll() {
+		return orderRepository.findAll();
+	}
 
-    @Override
-    public Optional<Order> getById(Long id) {
-        return orderRepository.findById(id);
-    }
+	@Override
+	public Optional<Order> getById(Long id) {
+		return orderRepository.findById(id);
+	}
 }
